@@ -3,21 +3,17 @@
 import { useEffect, useState } from "react";
 import { fetchGarments, Garment } from "@/lib/api";
 
-const CLOTH_COLORS = ["#2C3E50", "#E74C3C", "#3498DB", "#2ECC71", "#F39C12", "#ECF0F1"];
-
 interface ClothesPanelProps {
   selectedGarmentId: string | null;
   onSelectGarment: (id: string) => void;
-  clothColor: string;
-  onClothColorChange: (color: string) => void;
+  hasPersonImage: boolean;
   onTryOn: () => void;
 }
 
 export default function ClothesPanel({
   selectedGarmentId,
   onSelectGarment,
-  clothColor,
-  onClothColorChange,
+  hasPersonImage,
   onTryOn,
 }: ClothesPanelProps) {
   const [garments, setGarments] = useState<Garment[]>([]);
@@ -30,6 +26,8 @@ export default function ClothesPanel({
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, []);
+
+  const canTryOn = !!selectedGarmentId && hasPersonImage;
 
   return (
     <aside className="bg-warm-white border-l border-[var(--forma-border)] overflow-y-auto p-7 flex flex-col gap-5">
@@ -79,27 +77,6 @@ export default function ClothesPanel({
         </div>
       )}
 
-      {/* Cloth color */}
-      <div>
-        <div className="text-[0.7rem] tracking-[0.1em] uppercase text-taupe mb-2">
-          衣服顏色
-        </div>
-        <div className="flex gap-2 flex-wrap">
-          {CLOTH_COLORS.map((color) => (
-            <button
-              key={color}
-              className={`w-[26px] h-[26px] rounded-full cursor-pointer border-2 transition-all hover:scale-[1.15] ${
-                clothColor === color
-                  ? "border-forma-accent-dark scale-[1.15]"
-                  : "border-transparent"
-              }`}
-              style={{ background: color }}
-              onClick={() => onClothColorChange(color)}
-            />
-          ))}
-        </div>
-      </div>
-
       <div className="h-px bg-[var(--forma-border)]" />
 
       {/* Recommendation */}
@@ -118,10 +95,14 @@ export default function ClothesPanel({
       {/* Try-on button */}
       <button
         onClick={onTryOn}
-        disabled={!selectedGarmentId}
+        disabled={!canTryOn}
         className="w-full bg-charcoal text-cream border-none py-[13px] font-sans text-[0.8rem] tracking-[0.12em] uppercase cursor-pointer transition-colors hover:bg-forma-accent-dark disabled:opacity-40 disabled:cursor-not-allowed mt-2"
       >
-        ✦ 立即試穿
+        {!hasPersonImage
+          ? "請先上傳照片"
+          : !selectedGarmentId
+            ? "請選擇服裝"
+            : "✦ 立即試穿"}
       </button>
     </aside>
   );
