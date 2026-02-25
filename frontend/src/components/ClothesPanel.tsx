@@ -1,0 +1,128 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { fetchGarments, Garment } from "@/lib/api";
+
+const CLOTH_COLORS = ["#2C3E50", "#E74C3C", "#3498DB", "#2ECC71", "#F39C12", "#ECF0F1"];
+
+interface ClothesPanelProps {
+  selectedGarmentId: string | null;
+  onSelectGarment: (id: string) => void;
+  clothColor: string;
+  onClothColorChange: (color: string) => void;
+  onTryOn: () => void;
+}
+
+export default function ClothesPanel({
+  selectedGarmentId,
+  onSelectGarment,
+  clothColor,
+  onClothColorChange,
+  onTryOn,
+}: ClothesPanelProps) {
+  const [garments, setGarments] = useState<Garment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchGarments()
+      .then(setGarments)
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <aside className="bg-warm-white border-l border-[var(--forma-border)] overflow-y-auto p-7 flex flex-col gap-5">
+      <div className="font-serif text-[1.1rem] font-normal text-charcoal tracking-[0.05em] pb-3 border-b border-[var(--forma-border)]">
+        選擇服裝
+      </div>
+
+      {/* Garments from API */}
+      {loading && (
+        <p className="text-center text-taupe text-sm">載入服裝中...</p>
+      )}
+      {error && (
+        <p className="text-center text-red-500 text-sm">載入失敗: {error}</p>
+      )}
+
+      {!loading && !error && garments.length > 0 && (
+        <div>
+          <div className="text-[0.7rem] tracking-[0.1em] uppercase text-taupe mb-2">
+            服裝列表
+          </div>
+          <div className="grid grid-cols-2 gap-[10px]">
+            {garments.map((g) => (
+              <button
+                key={g.id}
+                onClick={() => onSelectGarment(g.id)}
+                className={`aspect-[3/4] bg-cream border cursor-pointer overflow-hidden relative transition-all flex flex-col items-center justify-center hover:border-forma-accent hover:scale-[1.02] ${
+                  selectedGarmentId === g.id
+                    ? "border-forma-accent-dark border-2"
+                    : "border-[var(--forma-border)]"
+                }`}
+              >
+                {g.image_url ? (
+                  <img
+                    src={g.image_url}
+                    alt={g.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-[2.2rem] opacity-50">👔</span>
+                )}
+                <span className="absolute bottom-1.5 left-0 right-0 text-center text-[0.62rem] tracking-[0.08em] uppercase text-taupe">
+                  {g.name}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Cloth color */}
+      <div>
+        <div className="text-[0.7rem] tracking-[0.1em] uppercase text-taupe mb-2">
+          衣服顏色
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          {CLOTH_COLORS.map((color) => (
+            <button
+              key={color}
+              className={`w-[26px] h-[26px] rounded-full cursor-pointer border-2 transition-all hover:scale-[1.15] ${
+                clothColor === color
+                  ? "border-forma-accent-dark scale-[1.15]"
+                  : "border-transparent"
+              }`}
+              style={{ background: color }}
+              onClick={() => onClothColorChange(color)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="h-px bg-[var(--forma-border)]" />
+
+      {/* Recommendation */}
+      <div>
+        <div className="text-[0.7rem] tracking-[0.1em] uppercase text-taupe mb-2">
+          匹配建議
+        </div>
+        <div className="text-[0.75rem] text-taupe leading-relaxed">
+          根據您的體型，推薦{" "}
+          <strong className="text-charcoal">修身直筒剪裁</strong>，搭配{" "}
+          <strong className="text-charcoal">高腰設計</strong>{" "}
+          可拉長腿部比例。
+        </div>
+      </div>
+
+      {/* Try-on button */}
+      <button
+        onClick={onTryOn}
+        disabled={!selectedGarmentId}
+        className="w-full bg-charcoal text-cream border-none py-[13px] font-sans text-[0.8rem] tracking-[0.12em] uppercase cursor-pointer transition-colors hover:bg-forma-accent-dark disabled:opacity-40 disabled:cursor-not-allowed mt-2"
+      >
+        ✦ 立即試穿
+      </button>
+    </aside>
+  );
+}
