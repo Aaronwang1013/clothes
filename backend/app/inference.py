@@ -1,14 +1,32 @@
+import io
+
+import boto3
 import httpx
 import replicate
+from botocore.config import Config
 from sqlmodel import Session
 
 from app.config import settings
 from app.db import engine
 from app.models import TryonTask
-from app.storage import get_presigned_url, upload_image
+from app.storage import upload_image
 
 
-def run_tryon(task_id: str, person_key: str, garment_key: str, category: str):
+def _download_from_minio(key: str) -> bytes:
+    """Download image bytes from MinIO using internal Docker endpoint."""
+    client = boto3.client(
+        "s3",
+        endpoint_url=f"http://{settings.minio_endpoint}",
+        aws_access_key_id=settings.minio_access_key,
+        aws_secret_access_key=settings.minio_secret_key,
+        config=Config(signature_version="s3v4"),
+        region_name="us-east-1",
+    )
+    resp = client.get_object(Bucket=settings.minio_bucket, Key=key)
+    return resp["Body"].read()
+
+
+def run_tryon(task_id: str, person_key: str, garment_key: str, category: str, garment_des: str = ""):
     """Run IDM-VTON inference via Replicate API. Called as a BackgroundTask."""
     with Session(engine) as session:
         task = session.get(TryonTask, task_id)
@@ -20,22 +38,32 @@ def run_tryon(task_id: str, person_key: str, garment_key: str, category: str):
         session.commit()
 
         try:
-            # Generate presigned URLs for Replicate to access images
-            person_url = get_presigned_url(person_key)
-            garment_url = get_presigned_url(garment_key)
+            # Download images from MinIO (internal Docker network)
+            person_bytes = _download_from_minio(person_key)
+            garment_bytes = _download_from_minio(garment_key)
 
-            # Call Replicate IDM-VTON
+            # BytesIO needs a .name attribute for Replicate SDK multipart upload
+            person_file = io.BytesIO(person_bytes)
+            person_file.name = "person.jpg"
+            garment_file = io.BytesIO(garment_bytes)
+            garment_file.name = "garment.jpg"
+
+            # Call Replicate IDM-VTON (latest version)
             output = replicate.run(
-                "cuuupid/idm-vton:c871bb9b046c1b1f6e63e7a4cebe1554a14d32bf39447819ac1dfa920bbedf30",
+                "cuuupid/idm-vton:0513734a452173b8173e907e3a59d19a36266e55b48528559432bd21c7d7e985",
                 input={
-                    "human_img": person_url,
-                    "garm_img": garment_url,
+                    "human_img": person_file,
+                    "garm_img": garment_file,
                     "category": category,
+                    "garment_des": garment_des,
                 },
             )
 
-            # output is a URL to the generated image
-            result_url = str(output)
+            # output may be a FileOutput object, a list, or a URL string
+            if isinstance(output, list):
+                result_url = str(output[0])
+            else:
+                result_url = str(output)
 
             # Download the result image
             resp = httpx.get(result_url, timeout=60)
@@ -48,6 +76,8 @@ def run_tryon(task_id: str, person_key: str, garment_key: str, category: str):
             task.status = "completed"
 
         except Exception as e:
+            import traceback
+            print("TRYON ERROR:", traceback.format_exc())
             task.status = "failed"
             task.error = str(e)[:500]
 

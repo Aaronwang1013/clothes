@@ -10,6 +10,7 @@ services:
       - MINIO_PUBLIC_ENDPOINT=localhost:9000
     volumes:
       - ./backend/app:/app/app
+      - ./backend/scripts:/app/scripts
     depends_on:
       minio:
         condition: service_healthy

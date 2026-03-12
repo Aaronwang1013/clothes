@@ -1,4 +1,4 @@
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, UploadFile
+from fastapi import APIRouter, BackgroundTasks, Depends, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 from sqlmodel import Session
 
@@ -17,8 +17,8 @@ class TryonRequest(BaseModel):
 @router.post("/tryon")
 async def create_tryon(
     person_image: UploadFile,
-    garment_id: str,
-    background_tasks: BackgroundTasks,
+    garment_id: str = Form(...),
+    background_tasks: BackgroundTasks = BackgroundTasks(),
     session: Session = Depends(get_session),
 ):
     # Validate garment exists
@@ -37,7 +37,7 @@ async def create_tryon(
     session.refresh(task)
 
     # Run inference in background
-    background_tasks.add_task(run_tryon, task.id, person_key, garment.image_url, garment.category)
+    background_tasks.add_task(run_tryon, task.id, person_key, garment.image_url, garment.category, garment.name)
 
     return {"task_id": task.id, "status": task.status}
 
