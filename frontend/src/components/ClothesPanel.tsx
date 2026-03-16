@@ -31,9 +31,20 @@ export default function ClothesPanel({
 
   return (
     <aside className="bg-warm-white border-l border-[var(--forma-border)] overflow-y-auto p-7 flex flex-col gap-5">
-      <div className="font-serif text-[1.1rem] font-normal text-charcoal tracking-[0.05em] pb-3 border-b border-[var(--forma-border)]">
+    {/* Header with action buttons */}
+    <div className="flex items-center justify-between pb-3 border-b border-[var(--forma-border)]">
+      <div className="font-serif text-[1.1rem] font-normal text-charcoal tracking-[0.05em]">
         選擇服裝
       </div>
+      <div className="flex gap-2">
+        <button className="bg-transparent border border-[var(--forma-border)] text-taupe px-3 py-1.5 font-sans text-[0.72rem] tracking-[0.08em] uppercase cursor-pointer transition-all hover:border-taupe hover:text-charcoal">
+          匯入衣物
+        </button>
+        <button className="bg-charcoal text-cream border-none px-3 py-1.5 font-sans text-[0.72rem] tracking-[0.08em] uppercase cursor-pointer transition-colors hover:bg-forma-accent-dark">
+          儲存造型
+        </button>
+      </div>
+    </div>
 
       {/* Garments from API */}
       {loading && (

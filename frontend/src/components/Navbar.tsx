@@ -19,15 +19,6 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
-
-      <div className="flex gap-3 items-center">
-        <button className="bg-transparent border border-[var(--forma-border)] text-taupe px-[22px] py-[9px] font-sans text-[0.78rem] tracking-[0.08em] uppercase cursor-pointer transition-all hover:border-taupe hover:text-charcoal">
-          匯入衣物
-        </button>
-        <button className="bg-charcoal text-cream border-none px-[22px] py-[9px] font-sans text-[0.78rem] tracking-[0.08em] uppercase cursor-pointer transition-colors hover:bg-forma-accent-dark">
-          儲存造型
-        </button>
-      </div>
     </nav>
   );
 }

@@ -7,11 +7,12 @@ interface TryonModalProps {
   personImage: File;
   garmentId: string;
   onClose: () => void;
+  onComplete?: (result: TryonResult) => void; //
 }
 
 type ModalStep = "processing" | "result";
 
-export default function TryonModal({ personImage, garmentId, onClose }: TryonModalProps) {
+export default function TryonModal({ personImage, garmentId, onClose, onComplete }: TryonModalProps) {
   const [step, setStep] = useState<ModalStep>("processing");
   const [error, setError] = useState<string | null>(null);
   const [pollingStatus, setPollingStatus] = useState<string>("pending");
@@ -22,7 +23,8 @@ export default function TryonModal({ personImage, garmentId, onClose }: TryonMod
   const handleComplete = useCallback((r: TryonResult) => {
     setResult(r);
     setStep("result");
-  }, []);
+    if (r.status == "completed") onComplete?.(r);
+  }, [onComplete]);
 
   const startPolling = useCallback((taskId: string) => {
     intervalRef.current = setInterval(async () => {
