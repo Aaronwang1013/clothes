@@ -37,8 +37,8 @@ function TabGroup({
             onClick={() => onSelect(opt)}
             className={`px-3 py-1 text-[0.72rem] tracking-[0.04em] border transition-all ${
               value === opt
-                ? "bg-charcoal text-cream border-charcoal"
-                : "bg-transparent text-taupe border-[var(--forma-border)] hover:border-taupe hover:text-charcoal"
+                ? "bg-forma-accent-dark text-white border-forma-accent-dark"
+                : "bg-transparent text-taupe border-[var(--forma-border)] hover:border-white/30 hover:text-cream"
             }`}
           >
             {opt}
@@ -63,7 +63,7 @@ export default function FilterTabs({ onChange }: FilterTabsProps) {
   };
 
   return (
-    <div className="px-8 py-3 border-b border-[var(--forma-border)] bg-warm-white flex gap-6 items-start">
+    <div className="px-8 py-3 border-b border-[var(--forma-border)] backdrop-blur-xl bg-warm-white flex gap-6 items-start">
       <TabGroup label="品牌" options={BRANDS} value={filters.brand} onSelect={(v) => update("brand", v)} />
       <div className="w-px self-stretch bg-[var(--forma-border)] my-0.5" />
       <TabGroup label="類型" options={CATEGORIES} value={filters.category} onSelect={(v) => update("category", v)} />

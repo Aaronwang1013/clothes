@@ -57,9 +57,9 @@ export default function BodyPanel({ bodyState, onChange }: BodyPanelProps) {
     const value = bodyState[cfg.key] as number;
     return (
       <div key={cfg.key} className="flex flex-col gap-1">
-        <div className="flex justify-between text-[0.78rem] text-charcoal">
+        <div className="flex justify-between text-[0.78rem] text-cream">
           <span>{cfg.label}</span>
-          <span className="text-forma-accent-dark font-medium">
+          <span className="text-forma-accent font-medium">
             {value} {cfg.unit}
           </span>
         </div>
@@ -75,8 +75,8 @@ export default function BodyPanel({ bodyState, onChange }: BodyPanelProps) {
   }
 
   return (
-    <aside className="bg-warm-white border-r border-[var(--forma-border)] overflow-y-auto p-7 flex flex-col gap-5">
-      <div className="font-serif text-[1.1rem] font-normal text-charcoal tracking-[0.05em] pb-3 border-b border-[var(--forma-border)]">
+    <aside className="backdrop-blur-xl bg-warm-white border-r border-[var(--forma-border)] overflow-y-auto p-7 flex flex-col gap-5">
+      <div className="font-serif text-[1.1rem] font-normal text-cream tracking-[0.05em] pb-3 border-b border-[var(--forma-border)]">
         身材比例
       </div>
 
@@ -96,8 +96,8 @@ export default function BodyPanel({ bodyState, onChange }: BodyPanelProps) {
                 i > 0 ? "border-l-0" : ""
               } ${
                 bodyState.gender === g
-                  ? "bg-charcoal text-cream border-charcoal"
-                  : "bg-transparent text-taupe"
+                  ? "bg-forma-accent-dark text-white border-forma-accent-dark"
+                  : "bg-transparent text-taupe hover:text-cream"
               }`}
             >
               {g === "male" ? "男性" : g === "female" ? "女性" : "中性"}

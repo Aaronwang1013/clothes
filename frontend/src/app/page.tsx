@@ -56,7 +56,7 @@ export default function Home() {
       </main>
 
       {/* 已試穿的暫存區 */}
-      <div className="h-[100px] border-t border-[var(--forma-border)] bg-warm-white flex items-center px-6 gap-4 shrink-0">
+      <div className="h-[100px] border-t border-[var(--forma-border)] backdrop-blur-xl bg-warm-white flex items-center px-6 gap-4 shrink-0">
         <span className="text-[0.65rem] tracking-[0.12em] uppercase text-taupe whitespace-nowrap">
           已試穿
         </span>

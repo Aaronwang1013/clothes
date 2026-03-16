@@ -14,12 +14,12 @@ const config: Config = {
   			serif: ['var(--font-cormorant)', 'Cormorant Garamond', 'serif'],
   		},
   		colors: {
-  			cream: '#F5F0E8',
-  			'warm-white': '#FAF8F4',
-  			charcoal: '#1C1C1C',
-  			taupe: '#8A7E72',
-  			'forma-accent': '#C4A882',
-  			'forma-accent-dark': '#9E7E5A',
+  			cream: '#1D1D1F',
+			'warm-white': 'rgba(255, 255, 255, 0.85)',
+			charcoal: '#F5F5F7',
+			taupe: 'rgba(0, 0, 0, 0.40)',
+			'forma-accent': '#6E6E73',
+			'forma-accent-dark': '#1D1D1F',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

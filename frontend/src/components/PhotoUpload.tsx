@@ -29,7 +29,7 @@ export default function PhotoUpload({ personImage, onImageChange }: PhotoUploadP
   return (
     <div
       className="relative flex items-center justify-center overflow-hidden"
-      style={{ background: "linear-gradient(160deg, #EDECE8 0%, #E0DAD0 100%)" }}
+      style={{ background: "#F5F5F7" }}
     >
       <input
         ref={inputRef}
@@ -53,7 +53,7 @@ export default function PhotoUpload({ personImage, onImageChange }: PhotoUploadP
           {/* Re-upload button */}
           <button
             onClick={() => inputRef.current?.click()}
-            className="absolute top-5 right-5 bg-[rgba(28,28,28,0.7)] text-white backdrop-blur-[8px] px-3 py-1.5 text-[0.72rem] tracking-[0.08em] uppercase cursor-pointer border-none transition-colors hover:bg-[rgba(28,28,28,0.9)]"
+            className="absolute top-5 right-5 bg-black/[0.06] text-cream backdrop-blur-md px-3 py-1.5 text-[0.72rem] tracking-[0.08em] uppercase cursor-pointer border border-black/[0.12] transition-colors hover:bg-black/[0.10]"
           >
             重新上傳
           </button>
@@ -61,7 +61,7 @@ export default function PhotoUpload({ personImage, onImageChange }: PhotoUploadP
           {/* Remove button */}
           <button
             onClick={handleRemove}
-            className="absolute top-5 left-5 bg-[rgba(28,28,28,0.7)] text-white backdrop-blur-[8px] w-8 h-8 flex items-center justify-center text-sm cursor-pointer border-none transition-colors hover:bg-[rgba(28,28,28,0.9)]"
+            className="absolute top-5 left-5 bg-black/[0.06] text-cream backdrop-blur-md w-8 h-8 flex items-center justify-center text-sm cursor-pointer border border-black/[0.12] transition-colors hover:bg-black/[0.10]"
           >
             ✕
           </button>
@@ -70,8 +70,8 @@ export default function PhotoUpload({ personImage, onImageChange }: PhotoUploadP
         <div
           className={`flex flex-col items-center justify-center w-[80%] max-w-[400px] aspect-[3/4] border-2 border-dashed cursor-pointer transition-colors ${
             dragging
-              ? "border-forma-accent bg-[rgba(196,168,130,0.1)]"
-              : "border-[var(--forma-border)] hover:border-taupe"
+              ? "border-forma-accent-dark bg-black/[0.04]"
+              : "border-black/20 hover:border-black/40"
           }`}
           onClick={() => inputRef.current?.click()}
           onDragOver={(e) => {
@@ -88,10 +88,10 @@ export default function PhotoUpload({ personImage, onImageChange }: PhotoUploadP
         >
           <div className="text-center text-taupe flex flex-col items-center gap-3">
             <div className="text-[2.5rem] opacity-40">📷</div>
-            <p className="text-[0.9rem] font-medium tracking-[0.05em]">
+            <p className="text-[0.9rem] font-medium tracking-[0.05em] text-cream">
               點擊或拖放上傳全身照
             </p>
-            <p className="text-[0.72rem] opacity-70">
+            <p className="text-[0.72rem] opacity-60">
               JPG / PNG，全身照效果最佳
             </p>
           </div>

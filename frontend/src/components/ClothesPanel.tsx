@@ -30,28 +30,28 @@ export default function ClothesPanel({
   const canTryOn = !!selectedGarmentId && hasPersonImage;
 
   return (
-    <aside className="bg-warm-white border-l border-[var(--forma-border)] overflow-y-auto p-7 flex flex-col gap-5">
-    {/* Header with action buttons */}
-    <div className="flex items-center justify-between pb-3 border-b border-[var(--forma-border)]">
-      <div className="font-serif text-[1.1rem] font-normal text-charcoal tracking-[0.05em]">
-        選擇服裝
+    <aside className="backdrop-blur-xl bg-warm-white border-l border-[var(--forma-border)] overflow-y-auto p-7 flex flex-col gap-5">
+      {/* Header with action buttons */}
+      <div className="flex items-center justify-between pb-3 border-b border-[var(--forma-border)]">
+        <div className="font-serif text-[1.1rem] font-normal text-cream tracking-[0.05em]">
+          選擇服裝
+        </div>
+        <div className="flex gap-2">
+          <button className="bg-transparent border border-[var(--forma-border)] text-taupe px-3 py-1.5 font-sans text-[0.72rem] tracking-[0.08em] uppercase cursor-pointer transition-all hover:border-white/30 hover:text-cream">
+            匯入衣物
+          </button>
+          <button className="bg-forma-accent-dark text-white border-none px-3 py-1.5 font-sans text-[0.72rem] tracking-[0.08em] uppercase cursor-pointer transition-colors hover:bg-forma-accent">
+            儲存造型
+          </button>
+        </div>
       </div>
-      <div className="flex gap-2">
-        <button className="bg-transparent border border-[var(--forma-border)] text-taupe px-3 py-1.5 font-sans text-[0.72rem] tracking-[0.08em] uppercase cursor-pointer transition-all hover:border-taupe hover:text-charcoal">
-          匯入衣物
-        </button>
-        <button className="bg-charcoal text-cream border-none px-3 py-1.5 font-sans text-[0.72rem] tracking-[0.08em] uppercase cursor-pointer transition-colors hover:bg-forma-accent-dark">
-          儲存造型
-        </button>
-      </div>
-    </div>
 
       {/* Garments from API */}
       {loading && (
         <p className="text-center text-taupe text-sm">載入服裝中...</p>
       )}
       {error && (
-        <p className="text-center text-red-500 text-sm">載入失敗: {error}</p>
+        <p className="text-center text-red-400 text-sm">載入失敗: {error}</p>
       )}
 
       {!loading && !error && garments.length > 0 && (
@@ -64,7 +64,7 @@ export default function ClothesPanel({
               <button
                 key={g.id}
                 onClick={() => onSelectGarment(g.id)}
-                className={`aspect-[3/4] bg-cream border cursor-pointer overflow-hidden relative transition-all flex flex-col items-center justify-center hover:border-forma-accent hover:scale-[1.02] ${
+                className={`aspect-[3/4] bg-white border cursor-pointer overflow-hidden relative transition-all flex flex-col items-center justify-center hover:border-forma-accent-dark hover:scale-[1.02] ${
                   selectedGarmentId === g.id
                     ? "border-forma-accent-dark border-2"
                     : "border-[var(--forma-border)]"
@@ -97,8 +97,8 @@ export default function ClothesPanel({
         </div>
         <div className="text-[0.75rem] text-taupe leading-relaxed">
           根據您的體型，推薦{" "}
-          <strong className="text-charcoal">修身直筒剪裁</strong>，搭配{" "}
-          <strong className="text-charcoal">高腰設計</strong>{" "}
+          <strong className="text-cream">修身直筒剪裁</strong>，搭配{" "}
+          <strong className="text-cream">高腰設計</strong>{" "}
           可拉長腿部比例。
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function ClothesPanel({
       <button
         onClick={onTryOn}
         disabled={!canTryOn}
-        className="w-full bg-charcoal text-cream border-none py-[13px] font-sans text-[0.8rem] tracking-[0.12em] uppercase cursor-pointer transition-colors hover:bg-forma-accent-dark disabled:opacity-40 disabled:cursor-not-allowed mt-2"
+        className="w-full bg-forma-accent-dark text-white border-none py-[13px] font-sans text-[0.8rem] tracking-[0.12em] uppercase cursor-pointer transition-colors hover:bg-forma-accent disabled:opacity-30 disabled:cursor-not-allowed mt-2"
       >
         {!hasPersonImage
           ? "請先上傳照片"

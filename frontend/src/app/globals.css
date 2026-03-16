@@ -4,14 +4,14 @@
 
 /* ── FORMA Design System ── */
 :root {
-  --cream: #F5F0E8;
-  --warm-white: #FAF8F4;
-  --charcoal: #1C1C1C;
-  --taupe: #8A7E72;
-  --accent: #C4A882;
-  --accent-dark: #9E7E5A;
-  --panel-bg: rgba(250,248,244,0.92);
-  --forma-border: rgba(140,126,114,0.2);
+  --cream: #1D1D1F;
+  --warm-white: rgba(255, 255, 255, 0.85);
+  --charcoal: #F5F5F7;
+  --taupe: rgba(0, 0, 0, 0.40);
+  --accent: #6E6E73;
+  --accent-dark: #1D1D1F;
+  --panel-bg: rgba(255, 255, 255, 0.85);
+  --forma-border: rgba(0, 0, 0, 0.08);
 }
 
 /* Keep shadcn/ui variables mapped to FORMA palette */
@@ -47,28 +47,20 @@
 }
 
 body {
-  background: var(--cream);
-  color: var(--charcoal);
+  background: #F5F5F7;
+  color: #1D1D1F;
   height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* ── Noise overlay ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 100;
-}
+
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--forma-border); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
 
 /* ── Range slider ── */
 input[type=range] {
@@ -76,7 +68,7 @@ input[type=range] {
   -webkit-appearance: none;
   appearance: none;
   height: 2px;
-  background: var(--forma-border);
+  background: rgba(0,0,0,0.12);
   border-radius: 2px;
   outline: none;
 }
@@ -87,20 +79,20 @@ input[type=range]::-webkit-slider-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--accent-dark);
+  background: #1D1D1F;
   cursor: pointer;
-  border: 2px solid var(--warm-white);
-  box-shadow: 0 0 0 1px var(--accent);
+  border: 2px solid #F5F5F7;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
 }
 
 input[type=range]::-moz-range-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--accent-dark);
+  background: #1D1D1F;
   cursor: pointer;
-  border: 2px solid var(--warm-white);
-  box-shadow: 0 0 0 1px var(--accent);
+  border: 2px solid #F5F5F7;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
 }
 
 /* ── Gentle float animation ── */
