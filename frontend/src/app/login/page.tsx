@@ -37,7 +37,7 @@ export default function LoginPage() {
         setToken(res.access_token);
         setRefreshToken(res.refresh_token);
         setStoredUser(res.user);
-        router.replace("/");
+        router.replace("/studio");
       } catch (e) {
         setError(e instanceof Error ? e.message : "SSO 登入失敗");
       }
@@ -58,7 +58,7 @@ export default function LoginPage() {
       setToken(res.access_token);
       setRefreshToken(res.refresh_token);
       setStoredUser(res.user);
-      router.replace("/");
+      router.replace("/studio");
     } catch (e) {
       setError(e instanceof Error ? e.message : "操作失敗");
     } finally {
