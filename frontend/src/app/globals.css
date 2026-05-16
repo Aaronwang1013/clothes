@@ -49,10 +49,6 @@
 body {
   background: #F5F5F7;
   color: #1D1D1F;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
 
