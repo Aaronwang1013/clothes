@@ -33,6 +33,11 @@ export interface AuthUser {
   avatar_url: string | null;
   is_admin: boolean;
   oauth_provider: string | null;
+  height_cm: number | null;
+  weight_kg: number | null;
+  bust_cm: number | null;
+  waist_cm: number | null;
+  hips_cm: number | null;
 }
 
 export interface AuthResponse {
@@ -244,4 +249,23 @@ export async function changePassword(
     const err = await res.json().catch(() => ({}));
     throw new Error(err.detail || "更改密碼失敗");
   }
+}
+
+export async function updateBodyMeasurements(data: {
+  height_cm?: number;
+  weight_kg?: number;
+  bust_cm?: number;
+  waist_cm?: number;
+  hips_cm?: number;
+}): Promise<AuthUser> {
+  const res = await authFetch(`${API_URL}/api/auth/body`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "更新失敗");
+  }
+  return res.json();
 }

@@ -3,13 +3,14 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.db import create_db_and_tables
+from app.db import create_db_and_tables, run_migrations
 from app.seed import seed_garments
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_db_and_tables()
+    run_migrations()
     seed_garments()
     yield
 

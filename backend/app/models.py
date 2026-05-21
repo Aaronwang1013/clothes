@@ -15,6 +15,12 @@ class User(SQLModel, table=True):
     oauth_provider_id: str | None = None   # provider 給的唯一 ID
     is_admin: bool = Field(default=False)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    # Body measurements (for size recommendation)
+    height_cm: float | None = None
+    weight_kg: float | None = None
+    bust_cm: float | None = None
+    waist_cm: float | None = None
+    hips_cm: float | None = None
 
 
 class Garment(SQLModel, table=True):

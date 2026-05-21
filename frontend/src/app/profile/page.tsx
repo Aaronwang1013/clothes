@@ -2,9 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { updateProfile, changePassword } from "@/lib/api";
+import { getMe, updateProfile, changePassword, updateBodyMeasurements } from "@/lib/api";
 import { getStoredUser, setStoredUser } from "@/lib/auth";
 import type { StoredUser } from "@/lib/auth";
+import type { AuthUser } from "@/lib/api";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -15,6 +16,15 @@ export default function ProfilePage() {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [profileLoading, setProfileLoading] = useState(false);
   const [profileMessage, setProfileMessage] = useState<{ type: "ok" | "err"; text: string } | null>(null);
+
+  // Body fields
+  const [heightCm, setHeightCm] = useState("");
+  const [weightKg, setWeightKg] = useState("");
+  const [bustCm, setBustCm] = useState("");
+  const [waistCm, setWaistCm] = useState("");
+  const [hipsCm, setHipsCm] = useState("");
+  const [bodyLoading, setBodyLoading] = useState(false);
+  const [bodyMessage, setBodyMessage] = useState<{ type: "ok" | "err"; text: string } | null>(null);
 
   // Password fields
   const [currentPassword, setCurrentPassword] = useState("");
@@ -32,6 +42,15 @@ export default function ProfilePage() {
     setUser(stored);
     setName(stored.name ?? "");
     setAvatarUrl(stored.avatar_url ?? "");
+
+    // Fetch full user data including body measurements
+    getMe().then((full: AuthUser) => {
+      if (full.height_cm) setHeightCm(String(full.height_cm));
+      if (full.weight_kg) setWeightKg(String(full.weight_kg));
+      if (full.bust_cm) setBustCm(String(full.bust_cm));
+      if (full.waist_cm) setWaistCm(String(full.waist_cm));
+      if (full.hips_cm) setHipsCm(String(full.hips_cm));
+    }).catch(() => {});
   }, [router]);
 
   async function handleProfileSave(e: React.FormEvent) {
@@ -55,6 +74,26 @@ export default function ProfilePage() {
       setProfileMessage({ type: "err", text: e instanceof Error ? e.message : "更新失敗" });
     } finally {
       setProfileLoading(false);
+    }
+  }
+
+  async function handleBodySave(e: React.FormEvent) {
+    e.preventDefault();
+    setBodyMessage(null);
+    setBodyLoading(true);
+    try {
+      const data: Record<string, number> = {};
+      if (heightCm) data.height_cm = parseFloat(heightCm);
+      if (weightKg) data.weight_kg = parseFloat(weightKg);
+      if (bustCm) data.bust_cm = parseFloat(bustCm);
+      if (waistCm) data.waist_cm = parseFloat(waistCm);
+      if (hipsCm) data.hips_cm = parseFloat(hipsCm);
+      await updateBodyMeasurements(data);
+      setBodyMessage({ type: "ok", text: "身材數據已儲存" });
+    } catch (e) {
+      setBodyMessage({ type: "err", text: e instanceof Error ? e.message : "更新失敗" });
+    } finally {
+      setBodyLoading(false);
     }
   }
 
@@ -140,6 +179,102 @@ export default function ProfilePage() {
           </form>
         </div>
 
+        {/* Body Measurements Section */}
+        <div className="bg-white border border-[var(--forma-border)] p-8 shadow-sm mb-5">
+          <h2 className="text-[0.72rem] tracking-[0.1em] uppercase text-taupe mb-1">身材數據</h2>
+          <p className="text-[0.72rem] text-taupe mb-6">用於 AI 尺寸推薦，所有欄位皆為選填</p>
+
+          <form onSubmit={handleBodySave} className="flex flex-col gap-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[0.72rem] tracking-[0.08em] uppercase text-taupe">身高 (cm)</label>
+                <input
+                  type="number"
+                  min="100"
+                  max="250"
+                  step="0.1"
+                  value={heightCm}
+                  onChange={(e) => setHeightCm(e.target.value)}
+                  placeholder="例：165"
+                  className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[0.72rem] tracking-[0.08em] uppercase text-taupe">體重 (kg)</label>
+                <input
+                  type="number"
+                  min="30"
+                  max="200"
+                  step="0.1"
+                  value={weightKg}
+                  onChange={(e) => setWeightKg(e.target.value)}
+                  placeholder="例：55"
+                  className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3">
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[0.72rem] tracking-[0.08em] uppercase text-taupe">胸圍 (cm)</label>
+                <input
+                  type="number"
+                  min="50"
+                  max="180"
+                  step="0.1"
+                  value={bustCm}
+                  onChange={(e) => setBustCm(e.target.value)}
+                  placeholder="例：86"
+                  className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[0.72rem] tracking-[0.08em] uppercase text-taupe">腰圍 (cm)</label>
+                <input
+                  type="number"
+                  min="40"
+                  max="180"
+                  step="0.1"
+                  value={waistCm}
+                  onChange={(e) => setWaistCm(e.target.value)}
+                  placeholder="例：68"
+                  className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[0.72rem] tracking-[0.08em] uppercase text-taupe">臀圍 (cm)</label>
+                <input
+                  type="number"
+                  min="50"
+                  max="180"
+                  step="0.1"
+                  value={hipsCm}
+                  onChange={(e) => setHipsCm(e.target.value)}
+                  placeholder="例：92"
+                  className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+                />
+              </div>
+            </div>
+
+            {bodyMessage && (
+              <p className={`text-[0.78rem] ${bodyMessage.type === "ok" ? "text-green-600" : "text-red-500"}`}>
+                {bodyMessage.text}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={bodyLoading}
+              className="w-full bg-cream text-white py-3 text-[0.78rem] tracking-[0.12em] uppercase cursor-pointer transition-colors hover:bg-forma-accent disabled:opacity-40 disabled:cursor-not-allowed border-none mt-1"
+            >
+              {bodyLoading ? "儲存中..." : "儲存身材數據"}
+            </button>
+          </form>
+        </div>
+
         {/* Password Section (email users only) */}
         {isEmailUser && (
           <div className="bg-white border border-[var(--forma-border)] p-8 shadow-sm mb-5">
@@ -202,10 +337,10 @@ export default function ProfilePage() {
         {/* Back link */}
         <div className="text-center">
           <a
-            href="/"
+            href="/studio"
             className="text-[0.72rem] text-taupe hover:text-cream transition-colors tracking-[0.04em]"
           >
-            返回首頁
+            返回試衣間
           </a>
         </div>
       </div>

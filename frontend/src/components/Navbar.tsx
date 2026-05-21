@@ -106,23 +106,25 @@ export default function Navbar() {
         {/* User */}
         {user ? (
           <div className="flex items-center gap-2 pl-2 border-l border-[var(--forma-border)] ml-1">
-            {user.avatar_url ? (
-              <img
-                src={user.avatar_url}
-                alt={user.name ?? ""}
-                className="w-7 h-7 rounded-full object-cover border border-[var(--forma-border)]"
-              />
-            ) : (
-              <div className="w-7 h-7 rounded-full bg-[#1D1D1F] flex items-center justify-center text-white text-[0.6rem] font-medium">
-                {(user.name || user.email)[0].toUpperCase()}
-              </div>
-            )}
-            <span className="text-[0.72rem] text-[#1D1D1F] max-w-[70px] truncate">
-              Hi, {user.name || user.email.split("@")[0]}
-            </span>
-            <svg viewBox="0 0 12 12" fill="none" stroke="rgba(0,0,0,0.4)" strokeWidth="1.5" className="w-2.5 h-2.5">
-              <path d="M2 4l4 4 4-4" />
-            </svg>
+            <Link href="/profile" className="flex items-center gap-2 no-underline hover:opacity-75 transition-opacity">
+              {user.avatar_url ? (
+                <img
+                  src={user.avatar_url}
+                  alt={user.name ?? ""}
+                  className="w-7 h-7 rounded-full object-cover border border-[var(--forma-border)]"
+                />
+              ) : (
+                <div className="w-7 h-7 rounded-full bg-[#1D1D1F] flex items-center justify-center text-white text-[0.6rem] font-medium">
+                  {(user.name || user.email)[0].toUpperCase()}
+                </div>
+              )}
+              <span className="text-[0.72rem] text-[#1D1D1F] max-w-[70px] truncate">
+                Hi, {user.name || user.email.split("@")[0]}
+              </span>
+              <svg viewBox="0 0 12 12" fill="none" stroke="rgba(0,0,0,0.4)" strokeWidth="1.5" className="w-2.5 h-2.5">
+                <path d="M2 4l4 4 4-4" />
+              </svg>
+            </Link>
             <button
               onClick={handleLogout}
               className="text-[0.65rem] text-[rgba(0,0,0,0.32)] hover:text-[#1D1D1F] transition-colors ml-1"

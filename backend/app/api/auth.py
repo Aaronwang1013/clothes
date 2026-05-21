@@ -70,6 +70,14 @@ class ChangePasswordRequest(BaseModel):
     new_password: str
 
 
+class UpdateBodyRequest(BaseModel):
+    height_cm: float | None = None
+    weight_kg: float | None = None
+    bust_cm: float | None = None
+    waist_cm: float | None = None
+    hips_cm: float | None = None
+
+
 class UserResponse(BaseModel):
     id: str
     email: str
@@ -77,6 +85,11 @@ class UserResponse(BaseModel):
     avatar_url: str | None
     is_admin: bool
     oauth_provider: str | None
+    height_cm: float | None = None
+    weight_kg: float | None = None
+    bust_cm: float | None = None
+    waist_cm: float | None = None
+    hips_cm: float | None = None
 
 
 class AuthResponse(BaseModel):
@@ -93,6 +106,11 @@ def _user_response(user: User) -> UserResponse:
         avatar_url=user.avatar_url,
         is_admin=user.is_admin,
         oauth_provider=user.oauth_provider,
+        height_cm=user.height_cm,
+        weight_kg=user.weight_kg,
+        bust_cm=user.bust_cm,
+        waist_cm=user.waist_cm,
+        hips_cm=user.hips_cm,
     )
 
 
@@ -281,4 +299,20 @@ def change_password(
 
 @router.get("/auth/me", response_model=UserResponse)
 def me(current_user: User = Depends(get_current_user)):
+    return _user_response(current_user)
+
+
+@router.patch("/auth/body", response_model=UserResponse)
+def update_body(
+    body: UpdateBodyRequest,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    for field in ["height_cm", "weight_kg", "bust_cm", "waist_cm", "hips_cm"]:
+        val = getattr(body, field)
+        if val is not None:
+            setattr(current_user, field, val)
+    session.add(current_user)
+    session.commit()
+    session.refresh(current_user)
     return _user_response(current_user)
