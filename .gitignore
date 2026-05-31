@@ -27,6 +27,18 @@ Thumbs.db
 *.db
 *.sqlite
 
+# Images / test photos
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.bmp
+*.tiff
+*.heic
+scripts/test_images/
+scripts/benchmark_results/
+
 # MinIO data
 minio_data/
 

@@ -2,8 +2,21 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
+    # Provider
+    tryon_provider: str = "replicate"
+
     # Replicate
     replicate_api_token: str = ""
+
+    # Fashn.ai
+    fashn_api_key: str = ""
+
+    # Kling AI
+    kling_api_key: str = ""
+    kling_api_secret: str = ""
+
+    # Segmind
+    segmind_api_key: str = ""
 
     # MinIO
     minio_endpoint: str = "minio:9000"

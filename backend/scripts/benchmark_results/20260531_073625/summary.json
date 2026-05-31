@@ -1,0 +1,18 @@
+[
+  {
+    "provider": "fashn",
+    "name": "Fashn.ai v1.6",
+    "status": "failed",
+    "error": "'Settings' object has no attribute 'fashn_api_key'",
+    "latency_seconds": 0.0,
+    "cost_usd": 0.0
+  },
+  {
+    "provider": "kling",
+    "name": "Kling AI",
+    "status": "failed",
+    "error": "'Settings' object has no attribute 'kling_api_key'",
+    "latency_seconds": 0.0,
+    "cost_usd": 0.0
+  }
+]
