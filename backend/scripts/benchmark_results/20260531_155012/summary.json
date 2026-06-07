@@ -1,0 +1,32 @@
+[
+  {
+    "provider": "replicate",
+    "name": "Replicate IDM-VTON",
+    "status": "failed",
+    "error": "ReplicateError Details:\nstatus: 401\ndetail: Missing authorization header",
+    "latency_seconds": 0.16,
+    "cost_usd": 0.0
+  },
+  {
+    "provider": "fashn",
+    "name": "Fashn.ai v1.6",
+    "status": "success",
+    "latency_seconds": 15.7,
+    "cost_usd": 0.075
+  },
+  {
+    "provider": "kling",
+    "name": "Kling AI",
+    "status": "success",
+    "latency_seconds": 27.61,
+    "cost_usd": 0.07
+  },
+  {
+    "provider": "segmind",
+    "name": "Segmind Try-On",
+    "status": "failed",
+    "error": "SEGMIND_API_KEY not set",
+    "latency_seconds": 0.0,
+    "cost_usd": 0.0
+  }
+]

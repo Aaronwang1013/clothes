@@ -126,7 +126,7 @@ def main():
                         choices=["upper_body", "lower_body", "dresses"])
     parser.add_argument("--providers", nargs="+", default=list(PROVIDERS.keys()),
                         choices=list(PROVIDERS.keys()))
-    parser.add_argument("--output", default="scripts/benchmark_results")
+    parser.add_argument("--output", default=str(Path(__file__).parent / "benchmark_results"))
     args = parser.parse_args()
 
     person_bytes = Path(args.person).read_bytes()

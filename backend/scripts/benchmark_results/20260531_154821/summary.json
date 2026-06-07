@@ -1,0 +1,17 @@
+[
+  {
+    "provider": "fashn",
+    "name": "Fashn.ai v1.6",
+    "status": "failed",
+    "error": "Client error '400 Bad Request' for url 'https://api.fashn.ai/v1/run'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400",
+    "latency_seconds": 2.1,
+    "cost_usd": 0.0
+  },
+  {
+    "provider": "kling",
+    "name": "Kling AI",
+    "status": "success",
+    "latency_seconds": 25.14,
+    "cost_usd": 0.07
+  }
+]

@@ -1,3 +1,4 @@
+import base64
 import time
 
 import httpx
@@ -35,16 +36,24 @@ class FashnProvider(TryonProvider):
 
         t0 = time.perf_counter()
 
+        person_b64 = "data:image/jpeg;base64," + base64.b64encode(person_bytes).decode()
+        garment_b64 = "data:image/jpeg;base64," + base64.b64encode(garment_bytes).decode()
+
         with httpx.Client(timeout=30) as client:
             resp = client.post(
                 f"{API_BASE}/run",
-                headers=headers,
-                files={
-                    "model_image": ("person.jpg", person_bytes, "image/jpeg"),
-                    "garment_image": ("garment.jpg", garment_bytes, "image/jpeg"),
+                headers={**headers, "Content-Type": "application/json"},
+                json={
+                    "model_name": "tryon-v1.6",
+                    "inputs": {
+                        "model_image": person_b64,
+                        "garment_image": garment_b64,
+                        "category": fashn_category,
+                        "mode": "balanced",
+                    },
                 },
-                data={"category": fashn_category},
             )
+            print("Fashn response:", resp.status_code, resp.text)
             resp.raise_for_status()
             prediction_id = resp.json()["id"]
 
