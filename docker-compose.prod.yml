@@ -1,0 +1,16 @@
+# 生產環境覆蓋：移除 MinIO，改用 AWS S3
+# 使用方式：docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+services:
+  backend:
+    restart: always
+    environment:
+      - USE_S3=true
+      - MINIO_ENDPOINT=
+    depends_on: {}
+
+  frontend:
+    restart: always
+
+  minio:
+    profiles:
+      - disabled
