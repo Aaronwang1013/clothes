@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SizeFinder from "@/components/SizeFinder";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -8,7 +9,14 @@ const STEPS = [
     title: "上傳人像",
     desc: "選一張全身正面照，建議光線均勻、背景乾淨",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-7 h-7" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        className="w-7 h-7"
+        aria-hidden="true"
+      >
         <rect x="3" y="3" width="18" height="18" rx="2" />
         <circle cx="12" cy="10" r="3" />
         <path d="M6 21v-1a6 6 0 0 1 12 0v1" />
@@ -20,7 +28,14 @@ const STEPS = [
     title: "挑選服裝",
     desc: "從 Uniqlo、H&M、Zara 等品牌的最新款式中選擇",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-7 h-7" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        className="w-7 h-7"
+        aria-hidden="true"
+      >
         <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z" />
       </svg>
     ),
@@ -30,7 +45,14 @@ const STEPS = [
     title: "AI 生成結果",
     desc: "IDM-VTON 在 30 秒內生成高真實感的試穿效果圖",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-7 h-7" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        className="w-7 h-7"
+        aria-hidden="true"
+      >
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
       </svg>
     ),
@@ -42,7 +64,14 @@ const FEATURES = [
     title: "IDM-VTON 技術核心",
     desc: "業界領先的虛擬試衣模型，精準還原布料質感、皺褶與服裝輪廓",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-6 h-6" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        className="w-6 h-6"
+        aria-hidden="true"
+      >
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
       </svg>
     ),
@@ -51,7 +80,14 @@ const FEATURES = [
     title: "多品牌服裝庫",
     desc: "Uniqlo、H&M、Zara 等主流品牌持續更新，每週新增百款服裝",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-6 h-6" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        className="w-6 h-6"
+        aria-hidden="true"
+      >
         <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
         <line x1="3" y1="6" x2="21" y2="6" />
         <path d="M16 10a4 4 0 0 1-8 0" />
@@ -62,7 +98,14 @@ const FEATURES = [
     title: "尺寸智慧推薦",
     desc: "輸入身高、體重、胸圍，AI 分析體型給出最合身的尺寸建議",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-6 h-6" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        className="w-6 h-6"
+        aria-hidden="true"
+      >
         <rect x="2" y="7" width="20" height="10" rx="2" />
         <line x1="7" y1="7" x2="7" y2="12" />
         <line x1="12" y1="7" x2="12" y2="10" />
@@ -74,7 +117,14 @@ const FEATURES = [
     title: "歷史記錄保存",
     desc: "登入後所有試穿記錄自動保存，隨時回顧、比較不同穿搭方案",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-6 h-6" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        className="w-6 h-6"
+        aria-hidden="true"
+      >
         <path d="M12 20h9" />
         <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
       </svg>
@@ -84,7 +134,14 @@ const FEATURES = [
     title: "隱私安全保障",
     desc: "照片僅用於本次試穿生成，不用於訓練模型，可隨時刪除",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-6 h-6" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        className="w-6 h-6"
+        aria-hidden="true"
+      >
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       </svg>
     ),
@@ -93,7 +150,14 @@ const FEATURES = [
     title: "完全免費使用",
     desc: "無需訂閱、無需信用卡，匿名即可立即試穿，享受完整功能",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-6 h-6" aria-hidden="true">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        className="w-6 h-6"
+        aria-hidden="true"
+      >
         <polyline points="20 6 9 17 4 12" />
       </svg>
     ),
@@ -117,7 +181,6 @@ const GRID_BG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/sv
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F]">
-
       {/* ── Nav ────────────────────────────────────────────── */}
       <nav
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5 bg-[rgba(245,245,247,0.85)] backdrop-blur-md border-b border-[rgba(0,0,0,0.05)]"
@@ -125,7 +188,7 @@ export default function LandingPage() {
         aria-label="主選單"
       >
         <span className="font-serif text-[1.3rem] font-light tracking-[0.15em]">
-          FOR<span className="text-[#6E6E73]">MA</span>
+          ShapeOn<span className="text-[#6E6E73]">You</span>
         </span>
         <div className="flex items-center gap-6">
           <a
@@ -140,6 +203,12 @@ export default function LandingPage() {
           >
             功能
           </a>
+          <Link
+            href="/size-guide"
+            className="hidden md:block text-[0.72rem] tracking-[0.1em] uppercase text-[rgba(0,0,0,0.45)] hover:text-[#1D1D1F] transition-colors duration-200 no-underline"
+          >
+            尺寸指南
+          </Link>
           <Link
             href="/login"
             className="text-[0.72rem] tracking-[0.1em] uppercase text-[rgba(0,0,0,0.45)] hover:text-[#1D1D1F] transition-colors duration-200 no-underline"
@@ -164,12 +233,12 @@ export default function LandingPage() {
         <div className="flex flex-col items-center text-center gap-8 px-6 max-w-3xl">
           {/* Badge */}
           <div className="border border-[rgba(0,0,0,0.12)] px-4 py-1.5 text-[0.68rem] tracking-[0.2em] uppercase text-[rgba(0,0,0,0.4)]">
-            Powered by IDM-VTON
+            AI 虛擬試衣間
           </div>
 
           {/* Headline */}
           <h1 className="font-serif text-[clamp(3.5rem,10vw,6rem)] font-light tracking-[0.1em] text-[#1D1D1F] leading-[0.95]">
-            FOR<span className="text-[#6E6E73]">MA</span>
+            Shape<span className="text-[#6E6E73]">OnYou</span>
           </h1>
 
           <p className="text-[clamp(1rem,2.5vw,1.2rem)] font-light tracking-[0.03em] text-[rgba(0,0,0,0.5)] leading-relaxed max-w-md">
@@ -191,7 +260,14 @@ export default function LandingPage() {
               className="text-[0.75rem] tracking-[0.1em] uppercase text-[rgba(0,0,0,0.4)] hover:text-[#1D1D1F] transition-colors duration-200 cursor-pointer flex items-center gap-2"
             >
               了解如何使用
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-3.5 h-3.5" aria-hidden="true">
+              <svg
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="w-3.5 h-3.5"
+                aria-hidden="true"
+              >
                 <polyline points="3 8 13 8 10 5" />
                 <polyline points="10 11 13 8" />
               </svg>
@@ -200,7 +276,8 @@ export default function LandingPage() {
 
           {/* Trust indicators */}
           <p className="text-[0.7rem] tracking-[0.08em] text-[rgba(0,0,0,0.28)]">
-            免費使用 &nbsp;·&nbsp; 無需登入 &nbsp;·&nbsp; 30 秒出結果 &nbsp;·&nbsp; 不儲存個人資料
+            免費使用 &nbsp;·&nbsp; 無需登入 &nbsp;·&nbsp; 30 秒出結果
+            &nbsp;·&nbsp; 不儲存個人資料
           </p>
         </div>
 
@@ -209,21 +286,56 @@ export default function LandingPage() {
           {/* Before card */}
           <div className="flex-1 max-w-[180px] bg-white border border-[rgba(0,0,0,0.07)] shadow-sm overflow-hidden">
             <div className="aspect-[3/4] bg-[#F5F5F7] flex items-center justify-center">
-              <svg viewBox="0 0 80 120" fill="none" className="w-20 opacity-20" aria-hidden="true">
-                <rect x="25" y="10" width="30" height="35" rx="15" fill="#1D1D1F" />
+              <svg
+                viewBox="0 0 80 120"
+                fill="none"
+                className="w-20 opacity-20"
+                aria-hidden="true"
+              >
+                <rect
+                  x="25"
+                  y="10"
+                  width="30"
+                  height="35"
+                  rx="15"
+                  fill="#1D1D1F"
+                />
                 <path d="M10 55h60l-5 55H15L10 55z" fill="#1D1D1F" />
-                <rect x="15" y="55" width="15" height="40" rx="3" fill="#6E6E73" />
-                <rect x="50" y="55" width="15" height="40" rx="3" fill="#6E6E73" />
+                <rect
+                  x="15"
+                  y="55"
+                  width="15"
+                  height="40"
+                  rx="3"
+                  fill="#6E6E73"
+                />
+                <rect
+                  x="50"
+                  y="55"
+                  width="15"
+                  height="40"
+                  rx="3"
+                  fill="#6E6E73"
+                />
               </svg>
             </div>
             <div className="px-3 py-2 border-t border-[rgba(0,0,0,0.05)]">
-              <p className="text-[0.6rem] tracking-[0.12em] uppercase text-[rgba(0,0,0,0.3)]">上傳照片</p>
+              <p className="text-[0.6rem] tracking-[0.12em] uppercase text-[rgba(0,0,0,0.3)]">
+                上傳照片
+              </p>
             </div>
           </div>
 
           {/* Arrow */}
           <div className="flex-shrink-0 mb-8">
-            <svg viewBox="0 0 32 16" fill="none" stroke="currentColor" strokeWidth="1" className="w-8 h-4 text-[rgba(0,0,0,0.2)]" aria-hidden="true">
+            <svg
+              viewBox="0 0 32 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1"
+              className="w-8 h-4 text-[rgba(0,0,0,0.2)]"
+              aria-hidden="true"
+            >
               <path d="M0 8h28M22 2l10 6-10 6" />
             </svg>
           </div>
@@ -231,34 +343,83 @@ export default function LandingPage() {
           {/* After card */}
           <div className="flex-1 max-w-[180px] bg-white border border-[#1D1D1F] shadow-md overflow-hidden">
             <div className="aspect-[3/4] bg-gradient-to-b from-[#F5F5F7] to-white flex items-center justify-center relative">
-              <svg viewBox="0 0 80 120" fill="none" className="w-20 opacity-30" aria-hidden="true">
-                <rect x="25" y="10" width="30" height="35" rx="15" fill="#1D1D1F" />
+              <svg
+                viewBox="0 0 80 120"
+                fill="none"
+                className="w-20 opacity-30"
+                aria-hidden="true"
+              >
+                <rect
+                  x="25"
+                  y="10"
+                  width="30"
+                  height="35"
+                  rx="15"
+                  fill="#1D1D1F"
+                />
                 <path d="M10 55h60l-5 55H15L10 55z" fill="#6E6E73" />
-                <rect x="8" y="55" width="18" height="38" rx="4" fill="#1D1D1F" />
-                <rect x="54" y="55" width="18" height="38" rx="4" fill="#1D1D1F" />
-                <rect x="15" y="48" width="50" height="14" rx="3" fill="#1D1D1F" />
+                <rect
+                  x="8"
+                  y="55"
+                  width="18"
+                  height="38"
+                  rx="4"
+                  fill="#1D1D1F"
+                />
+                <rect
+                  x="54"
+                  y="55"
+                  width="18"
+                  height="38"
+                  rx="4"
+                  fill="#1D1D1F"
+                />
+                <rect
+                  x="15"
+                  y="48"
+                  width="50"
+                  height="14"
+                  rx="3"
+                  fill="#1D1D1F"
+                />
               </svg>
               <div className="absolute bottom-2 right-2 bg-[#1D1D1F] text-white text-[0.55rem] tracking-[0.1em] px-2 py-1 uppercase">
                 AI 生成
               </div>
             </div>
             <div className="px-3 py-2 border-t border-[rgba(0,0,0,0.1)]">
-              <p className="text-[0.6rem] tracking-[0.12em] uppercase text-[rgba(0,0,0,0.5)]">試穿效果</p>
+              <p className="text-[0.6rem] tracking-[0.12em] uppercase text-[rgba(0,0,0,0.5)]">
+                試穿效果
+              </p>
             </div>
           </div>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-10 flex flex-col items-center gap-2" aria-hidden="true">
-          <span className="text-[0.58rem] tracking-[0.16em] uppercase text-[rgba(0,0,0,0.22)]">scroll</span>
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-4 h-4 text-[rgba(0,0,0,0.22)] animate-bounce">
+        <div
+          className="absolute bottom-10 flex flex-col items-center gap-2"
+          aria-hidden="true"
+        >
+          <span className="text-[0.58rem] tracking-[0.16em] uppercase text-[rgba(0,0,0,0.22)]">
+            scroll
+          </span>
+          <svg
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            className="w-4 h-4 text-[rgba(0,0,0,0.22)] animate-bounce"
+          >
             <polyline points="2 5 8 11 14 5" />
           </svg>
         </div>
       </section>
 
       {/* ── Brands strip ───────────────────────────────────── */}
-      <section className="bg-white border-y border-[rgba(0,0,0,0.06)] py-6 overflow-hidden" aria-label="合作品牌">
+      <section
+        className="bg-white border-y border-[rgba(0,0,0,0.06)] py-6 overflow-hidden"
+        aria-label="合作品牌"
+      >
         <p className="text-center text-[0.62rem] tracking-[0.22em] uppercase text-[rgba(0,0,0,0.28)] mb-5">
           收錄品牌
         </p>
@@ -286,23 +447,34 @@ export default function LandingPage() {
             <p className="text-[0.65rem] tracking-[0.22em] uppercase text-[rgba(0,0,0,0.32)] mb-3">
               使用方式
             </p>
-            <h2 id="how-heading" className="font-serif text-[clamp(1.8rem,4vw,2.4rem)] font-light tracking-[0.08em]">
+            <h2
+              id="how-heading"
+              className="font-serif text-[clamp(1.8rem,4vw,2.4rem)] font-light tracking-[0.08em]"
+            >
               三步驟，輕鬆試穿
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2 relative">
             {STEPS.map((step, i) => (
-              <div key={step.num} className="relative flex flex-col items-center text-center">
+              <div
+                key={step.num}
+                className="relative flex flex-col items-center text-center"
+              >
                 {/* Connector line (between cards) */}
                 {i < STEPS.length - 1 && (
-                  <div className="hidden md:block absolute top-12 left-[calc(50%+3rem)] w-[calc(100%-6rem)] h-px bg-[rgba(0,0,0,0.08)]" aria-hidden="true" />
+                  <div
+                    className="hidden md:block absolute top-12 left-[calc(50%+3rem)] w-[calc(100%-6rem)] h-px bg-[rgba(0,0,0,0.08)]"
+                    aria-hidden="true"
+                  />
                 )}
 
                 {/* Card */}
                 <div className="bg-white border border-[rgba(0,0,0,0.06)] px-8 py-10 w-full flex flex-col items-center gap-5 hover:border-[rgba(0,0,0,0.15)] transition-colors duration-200">
                   <div className="flex items-center gap-3">
-                    <span className="font-serif text-[0.65rem] tracking-[0.2em] text-[rgba(0,0,0,0.3)]">{step.num}</span>
+                    <span className="font-serif text-[0.65rem] tracking-[0.2em] text-[rgba(0,0,0,0.3)]">
+                      {step.num}
+                    </span>
                     <div className="text-[rgba(0,0,0,0.4)]">{step.icon}</div>
                   </div>
                   <div>
@@ -346,13 +518,20 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ───────────────────────────────────────── */}
-      <section id="features" className="bg-white py-32 px-6" aria-labelledby="features-heading">
+      <section
+        id="features"
+        className="bg-white py-32 px-6"
+        aria-labelledby="features-heading"
+      >
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-20">
             <p className="text-[0.65rem] tracking-[0.22em] uppercase text-[rgba(0,0,0,0.32)] mb-3">
               功能特色
             </p>
-            <h2 id="features-heading" className="font-serif text-[clamp(1.8rem,4vw,2.4rem)] font-light tracking-[0.08em]">
+            <h2
+              id="features-heading"
+              className="font-serif text-[clamp(1.8rem,4vw,2.4rem)] font-light tracking-[0.08em]"
+            >
               穿搭，從此不再猜測
             </h2>
           </div>
@@ -380,6 +559,9 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Size Finder ────────────────────────────────────── */}
+      <SizeFinder />
+
       {/* ── Final CTA ──────────────────────────────────────── */}
       <section
         className="py-36 px-6 bg-[#F5F5F7] text-center relative overflow-hidden"
@@ -392,13 +574,14 @@ export default function LandingPage() {
           </div>
 
           <h2 className="font-serif text-[clamp(2.2rem,6vw,3.8rem)] font-light tracking-[0.08em] text-[#1D1D1F] leading-tight">
-            試穿，比想像<br />
+            試穿，比想像
+            <br />
             <span className="text-[#6E6E73]">更真實</span>
           </h2>
 
           <p className="text-[0.9rem] font-light tracking-[0.03em] text-[rgba(0,0,0,0.45)] leading-relaxed max-w-sm">
-            不再猜測衣服穿上身的樣子。
-            上傳一張照片，FORMA 幫你在 30 秒內看見答案。
+            不再猜測衣服穿上身的樣子。 上傳一張照片，ShapeOnYou 幫你在 30
+            秒內看見答案。
           </p>
 
           <Link
@@ -418,7 +601,7 @@ export default function LandingPage() {
       <footer className="bg-[#1D1D1F] py-10 px-8">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="font-serif text-[1.1rem] font-light tracking-[0.15em] text-white">
-            FOR<span className="text-[#6E6E73]">MA</span>
+            ShapeOn<span className="text-[#6E6E73]">You</span>
           </span>
 
           <nav className="flex items-center gap-6" aria-label="頁尾導覽">
@@ -437,11 +620,10 @@ export default function LandingPage() {
           </nav>
 
           <p className="text-[0.62rem] tracking-[0.06em] text-[rgba(255,255,255,0.25)]">
-            © 2025 FORMA. Powered by IDM-VTON
+            © 2025 ShapeOnYou. All rights reserved.
           </p>
         </div>
       </footer>
-
     </div>
   );
 }
