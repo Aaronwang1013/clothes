@@ -15,8 +15,8 @@ services:
     restart: always
 
   minio:
-    image: hello-world
-    entrypoint: ["true"]
+    image: alpine
+    command: ["sh", "-c", "exit 0"]
     healthcheck:
       test: ["CMD", "true"]
       interval: 1s
