@@ -6,6 +6,10 @@ services:
     environment:
       - USE_S3=true
       - MINIO_ENDPOINT=
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/scripts:/app/scripts
+      - sqlite_data:/app/data
     depends_on:
       minio:
         condition: service_completed_successfully
@@ -21,3 +25,6 @@ services:
       test: ["CMD", "true"]
       interval: 1s
       retries: 1
+
+volumes:
+  sqlite_data:
