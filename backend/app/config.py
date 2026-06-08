@@ -2,8 +2,8 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    # Replicate
-    replicate_api_token: str = ""
+    # Fashn.ai
+    fashn_api_key: str = ""
 
     # Storage mode — USE_S3=false 用 MinIO（本地），USE_S3=true 用 AWS S3（生產）
     use_s3: bool = False

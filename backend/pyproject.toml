@@ -8,7 +8,6 @@ dependencies = [
     "uvicorn[standard]>=0.34",
     "sqlmodel>=0.0.22",
     "boto3>=1.35",
-    "replicate>=1.0",
     "python-multipart>=0.0.18",
     "pillow>=11.0",
     "pydantic-settings>=2.7",

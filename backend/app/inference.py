@@ -1,33 +1,22 @@
-import io
+import time
+import traceback
 
-import boto3
 import httpx
-import replicate
-from botocore.config import Config
 from sqlmodel import Session
 
 from app.config import settings
 from app.db import engine
 from app.models import TryonTask
-from app.storage import upload_image
+from app.storage import get_presigned_url, upload_image
 
-
-def _download_from_minio(key: str) -> bytes:
-    """Download image bytes from MinIO using internal Docker endpoint."""
-    client = boto3.client(
-        "s3",
-        endpoint_url=f"http://{settings.minio_endpoint}",
-        aws_access_key_id=settings.minio_access_key,
-        aws_secret_access_key=settings.minio_secret_key,
-        config=Config(signature_version="s3v4"),
-        region_name="us-east-1",
-    )
-    resp = client.get_object(Bucket=settings.minio_bucket, Key=key)
-    return resp["Body"].read()
+FASHN_RUN_URL = "https://api.fashn.ai/v1/run"
+FASHN_STATUS_URL = "https://api.fashn.ai/v1/status/{id}"
+POLL_INTERVAL = 3   # 秒
+POLL_TIMEOUT = 120  # 最多等 2 分鐘
 
 
 def run_tryon(task_id: str, person_key: str, garment_key: str, category: str, garment_des: str = ""):
-    """Run IDM-VTON inference via Replicate API. Called as a BackgroundTask."""
+    """Run virtual try-on via Fashn.ai API. Called as a BackgroundTask."""
     with Session(engine) as session:
         task = session.get(TryonTask, task_id)
         if not task:
@@ -38,45 +27,64 @@ def run_tryon(task_id: str, person_key: str, garment_key: str, category: str, ga
         session.commit()
 
         try:
-            # Download images from MinIO (internal Docker network)
-            person_bytes = _download_from_minio(person_key)
-            garment_bytes = _download_from_minio(garment_key)
+            headers = {
+                "Authorization": f"Bearer {settings.fashn_api_key}",
+                "Content-Type": "application/json",
+            }
 
-            # BytesIO needs a .name attribute for Replicate SDK multipart upload
-            person_file = io.BytesIO(person_bytes)
-            person_file.name = "person.jpg"
-            garment_file = io.BytesIO(garment_bytes)
-            garment_file.name = "garment.jpg"
+            # 產生圖片的可存取 URL 傳給 Fashn.ai
+            person_url = get_presigned_url(person_key, expires=3600)
+            garment_url = get_presigned_url(garment_key, expires=3600)
 
-            # Call Replicate IDM-VTON (latest version)
-            output = replicate.run(
-                "cuuupid/idm-vton:0513734a452173b8173e907e3a59d19a36266e55b48528559432bd21c7d7e985",
-                input={
-                    "human_img": person_file,
-                    "garm_img": garment_file,
-                    "category": category,
-                    "garment_des": garment_des,
+            # 送出推論請求
+            payload = {
+                "model_name": "tryon-v1.6",
+                "inputs": {
+                    "model_image": person_url,
+                    "garment_image": garment_url,
+                    "category": category or "auto",
+                    "mode": "balanced",
                 },
-            )
+            }
 
-            # output may be a FileOutput object, a list, or a URL string
-            if isinstance(output, list):
-                result_url = str(output[0])
-            else:
-                result_url = str(output)
+            with httpx.Client(timeout=30) as client:
+                run_resp = client.post(FASHN_RUN_URL, json=payload, headers=headers)
+                run_resp.raise_for_status()
+                prediction_id = run_resp.json()["id"]
 
-            # Download the result image
-            resp = httpx.get(result_url, timeout=60)
-            resp.raise_for_status()
+                # 輪詢狀態
+                elapsed = 0
+                while elapsed < POLL_TIMEOUT:
+                    time.sleep(POLL_INTERVAL)
+                    elapsed += POLL_INTERVAL
 
-            # Upload to MinIO
-            result_key = upload_image(resp.content, content_type="image/png")
+                    status_resp = client.get(
+                        FASHN_STATUS_URL.format(id=prediction_id),
+                        headers=headers,
+                    )
+                    status_resp.raise_for_status()
+                    status_data = status_resp.json()
+                    status = status_data.get("status")
+
+                    if status == "completed":
+                        result_url = status_data["output"][0]
+                        break
+                    elif status == "failed":
+                        error_info = status_data.get("error", {})
+                        raise RuntimeError(f"Fashn.ai failed: {error_info}")
+                    # starting / in_queue / processing → 繼續等
+                else:
+                    raise TimeoutError(f"Fashn.ai timeout after {POLL_TIMEOUT}s")
+
+            # 下載結果圖並上傳到 S3/MinIO
+            img_resp = httpx.get(result_url, timeout=60)
+            img_resp.raise_for_status()
+            result_key = upload_image(img_resp.content, content_type="image/png")
 
             task.result_image_url = result_key
             task.status = "completed"
 
         except Exception as e:
-            import traceback
             print("TRYON ERROR:", traceback.format_exc())
             task.status = "failed"
             task.error = str(e)[:500]
