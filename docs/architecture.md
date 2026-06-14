@@ -1,6 +1,6 @@
 # 智能試衣平台（Virtual Try-On）系統架構說明文件
 
-> 版本：1.0｜日期：2026-06-08｜作者：Aaron Wang
+> 版本：1.1｜日期：2026-06-14｜作者：Aaron Wang
 
 ---
 
@@ -31,7 +31,12 @@
 
 ### 目前狀態
 
-目前處於 **MVP（最小可行產品）** 階段，已實作基礎試穿流程、服裝管理、圖片儲存及 JWT 身份驗證骨架。
+MVP 核心功能已完成，包含：
+
+- **試穿流程**：上傳人像 → 選服裝 → 呼叫 Fashn.ai → 輪詢結果 → 顯示
+- **用戶系統**：Email 註冊/登入、JWT + Refresh Token Rotation、忘記密碼（Resend 發信）、SSO 骨架（Google/LINE/Facebook/Apple）
+- **前端 Studio**：3 欄式佈局（品牌側欄 / 試穿中心 / 試穿紀錄）
+- **部署架構**：Vercel（前端）+ AWS EC2 t4g.small 新加坡（後端）+ AWS S3
 
 ---
 
@@ -236,42 +241,42 @@ pending ──► processing ──► completed
 
 ## 5. 資料模型
 
+> 完整 Schema 詳見 `docs/DATABASE_SCHEMA.md`
+
 ### User（使用者）
 
-```sql
-CREATE TABLE user (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    email       TEXT    NOT NULL UNIQUE,
-    name        TEXT,
-    hashed_password TEXT NOT NULL,
-    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-);
+```python
+id              TEXT (UUID hex, PK)
+email           TEXT UNIQUE NOT NULL
+name            TEXT
+avatar_url      TEXT
+password_hash   TEXT          # Email 登入用；SSO 用戶為 NULL
+oauth_provider  TEXT          # "google" | "line" | "facebook" | "apple" | NULL
+oauth_provider_id TEXT
+is_admin        BOOLEAN
+created_at      DATETIME
 ```
 
 ### Garment（服裝）
 
-```sql
-CREATE TABLE garment (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    name        TEXT    NOT NULL,
-    category    TEXT    NOT NULL,   -- 例如: tops, bottoms, dress
-    image_url   TEXT    NOT NULL    -- S3 URL
-);
+```python
+id          TEXT (UUID hex, PK)
+name        TEXT NOT NULL
+category    TEXT               # 目前只有 "upper_body"
+image_url   TEXT               # S3/MinIO object key
 ```
 
 ### TryonTask（試穿任務）
 
-```sql
-CREATE TABLE tryontask (
-    id                INTEGER  PRIMARY KEY AUTOINCREMENT,
-    person_image_url  TEXT     NOT NULL,   -- S3 URL（人像）
-    garment_id        INTEGER  NOT NULL REFERENCES garment(id),
-    user_id           INTEGER  REFERENCES user(id),  -- nullable（匿名支援）
-    status            TEXT     NOT NULL DEFAULT 'pending',
-    result_image_url  TEXT,              -- S3 URL（結果圖，完成後填入）
-    error             TEXT,              -- 失敗原因（失敗時填入）
-    created_at        DATETIME DEFAULT CURRENT_TIMESTAMP
-);
+```python
+id                TEXT (UUID hex, PK)
+person_image_url  TEXT NOT NULL      # S3/MinIO object key（人像）
+garment_id        TEXT FK→garment
+user_id           TEXT FK→user       # nullable（支援匿名使用）
+status            TEXT               # pending | processing | completed | failed
+result_image_url  TEXT               # S3/MinIO key（完成後填入）
+error             TEXT               # 失敗原因（最多 500 字元）
+created_at        DATETIME
 ```
 
 ### 模型關聯
@@ -284,49 +289,49 @@ User ──(1:N)──► TryonTask ◄──(N:1)── Garment
 
 ## 6. API 列表
 
-### 試穿
-
-| 方法 | 路徑 | 說明 | 認證 |
-|------|------|------|------|
-| POST | `/api/tryon` | 提交試穿請求 | 否（匿名） |
-| GET | `/api/tryon/{task_id}` | 查詢任務狀態與結果 | 否 |
-
-**POST /api/tryon 請求格式：**
-```json
-{
-  "person_image_url": "s3://...",
-  "garment_id": 1
-}
-```
-
-**GET /api/tryon/{task_id} 回應格式：**
-```json
-{
-  "task_id": 42,
-  "status": "completed",
-  "result_image_url": "https://s3.../result.jpg",
-  "created_at": "2026-06-08T12:00:00Z"
-}
-```
-
-### 服裝
-
-| 方法 | 路徑 | 說明 | 認證 |
-|------|------|------|------|
-| GET | `/api/garments` | 列出所有服裝 | 否 |
-
-### 上傳
-
-| 方法 | 路徑 | 說明 | 認證 |
-|------|------|------|------|
-| POST | `/api/upload` | 上傳圖片至 S3/MinIO | 否 |
+> 完整 request/response 格式詳見 `docs/API_SPEC.md`
 
 ### 認證
 
+| 方法 | 路徑 | 說明 | 需登入 |
+|------|------|------|--------|
+| POST | `/api/auth/register` | Email 註冊 | 否 |
+| POST | `/api/auth/login` | Email 登入 | 否 |
+| POST | `/api/auth/sso` | SSO 社群登入 | 否 |
+| POST | `/api/auth/logout` | 登出（撤銷 refresh token） | 否 |
+| POST | `/api/auth/refresh` | 刷新 access token | 否 |
+| POST | `/api/auth/forgot-password` | 寄送重設密碼信 | 否 |
+| POST | `/api/auth/reset-password` | 重設密碼 | 否 |
+| GET  | `/api/auth/me` | 取得當前用戶資訊 | 是 |
+| PATCH | `/api/auth/profile` | 更新個人資料 | 是 |
+| POST | `/api/auth/change-password` | 修改密碼 | 是 |
+
+### 試穿
+
+| 方法 | 路徑 | 說明 | 需登入 |
+|------|------|------|--------|
+| POST | `/api/tryon` | 提交試穿（multipart/form-data） | 否（匿名可用） |
+| GET  | `/api/tryon/{task_id}` | 查詢任務狀態與結果 | 否 |
+| GET  | `/api/tryon/history` | 查詢當前用戶試穿歷史 | 是 |
+
+### 服裝
+
+| 方法 | 路徑 | 說明 | 需登入 |
+|------|------|------|--------|
+| GET | `/api/garments` | 列出所有服裝 | 否 |
+| GET | `/api/garments/{garment_id}` | 取得單一服裝 | 否 |
+
+### 上傳
+
+| 方法 | 路徑 | 說明 | 需登入 |
+|------|------|------|--------|
+| POST | `/api/upload` | 上傳圖片至 S3/MinIO | 否 |
+
+### 系統
+
 | 方法 | 路徑 | 說明 |
 |------|------|------|
-| POST | `/api/auth/register` | 使用者註冊 |
-| POST | `/api/auth/login` | 使用者登入，回傳 JWT |
+| GET | `/health` | 健康檢查 |
 
 ---
 

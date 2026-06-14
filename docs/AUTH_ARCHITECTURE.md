@@ -1,4 +1,6 @@
-# FORMA — 使用者認證架構圖
+# 使用者認證架構
+
+> 版本：1.1｜日期：2026-06-14｜作者：Aaron Wang
 
 ---
 
@@ -21,10 +23,10 @@
 ┌─────────────────────────────────────────────────────────────────┐
 │                    FastAPI 後端 (localhost:8000)                  │
 │                                                                  │
-│   /api/auth/register    /api/auth/login    /api/auth/sso        │
-│   /api/auth/logout      /api/auth/refresh                       │
-│   /api/auth/forgot-password               /api/auth/me          │
-│   /api/auth/reset-password                /api/auth/profile     │
+│   /api/auth/register       /api/auth/login          /api/auth/sso            │
+│   /api/auth/logout         /api/auth/refresh                               │
+│   /api/auth/forgot-password               /api/auth/reset-password         │
+│   /api/auth/me             /api/auth/profile        /api/auth/change-password│
 └──────────────────────────┬──────────────────────────────────────┘
                            │ SQLModel ORM
                            ▼
