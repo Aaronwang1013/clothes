@@ -28,7 +28,7 @@ export default function Navbar({ variant = "site" }: NavbarProps) {
   async function handleLogout() {
     await logoutUser();
     setUser(null);
-    router.refresh();
+    router.push("/login");
   }
 
   const logo = (
@@ -84,9 +84,11 @@ export default function Navbar({ variant = "site" }: NavbarProps) {
         <div className="flex items-center gap-4 ml-auto">
           {user ? (
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-[#1D1D1F] flex items-center justify-center text-white text-[0.6rem] font-medium">
-                {(user.name || user.email)[0].toUpperCase()}
-              </div>
+              <Link href="/profile" className="no-underline">
+                <div className="w-7 h-7 rounded-full bg-[#1D1D1F] flex items-center justify-center text-white text-[0.6rem] font-medium hover:opacity-70 transition-opacity">
+                  {(user.name || user.email)[0].toUpperCase()}
+                </div>
+              </Link>
               <button
                 onClick={handleLogout}
                 className="text-[0.65rem] text-[rgba(0,0,0,0.32)] hover:text-[#1D1D1F] transition-colors duration-200"
@@ -157,20 +159,22 @@ export default function Navbar({ variant = "site" }: NavbarProps) {
         </button>
         {user ? (
           <div className="flex items-center gap-2 pl-2 border-l border-[var(--forma-border)] ml-1">
-            {user.avatar_url ? (
-              <img
-                src={user.avatar_url}
-                alt={user.name ?? ""}
-                className="w-7 h-7 rounded-full object-cover border border-[var(--forma-border)]"
-              />
-            ) : (
-              <div className="w-7 h-7 rounded-full bg-[#1D1D1F] flex items-center justify-center text-white text-[0.6rem] font-medium">
-                {(user.name || user.email)[0].toUpperCase()}
-              </div>
-            )}
-            <span className="text-[0.72rem] text-[#1D1D1F] max-w-[70px] truncate">
-              Hi, {user.name || user.email.split("@")[0]}
-            </span>
+            <Link href="/profile" className="no-underline flex items-center gap-2 hover:opacity-70 transition-opacity">
+              {user.avatar_url ? (
+                <img
+                  src={user.avatar_url}
+                  alt={user.name ?? ""}
+                  className="w-7 h-7 rounded-full object-cover border border-[var(--forma-border)]"
+                />
+              ) : (
+                <div className="w-7 h-7 rounded-full bg-[#1D1D1F] flex items-center justify-center text-white text-[0.6rem] font-medium">
+                  {(user.name || user.email)[0].toUpperCase()}
+                </div>
+              )}
+              <span className="text-[0.72rem] text-[#1D1D1F] max-w-[70px] truncate">
+                Hi, {user.name || user.email.split("@")[0]}
+              </span>
+            </Link>
             <button
               onClick={handleLogout}
               className="text-[0.65rem] text-[rgba(0,0,0,0.32)] hover:text-[#1D1D1F] transition-colors ml-1 cursor-pointer"

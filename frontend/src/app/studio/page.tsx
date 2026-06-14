@@ -14,9 +14,11 @@ export default function StudioPage() {
     null,
   );
   const [showTryonModal, setShowTryonModal] = useState(false);
+  const [outfitRefreshTrigger, setOutfitRefreshTrigger] = useState(0);
 
   function handleTryonComplete(result: TryonResult) {
     console.log("Tryon complete:", result.task_id);
+    setOutfitRefreshTrigger((n) => n + 1);
   }
 
   function handleReset() {
@@ -47,7 +49,7 @@ export default function StudioPage() {
           onTryOn={() => setShowTryonModal(true)}
           onReset={handleReset}
         />
-        <OutfitRecords />
+        <OutfitRecords refreshTrigger={outfitRefreshTrigger} />
       </main>
 
       {showTryonModal && selectedGarmentId && personImage && (
