@@ -32,3 +32,5 @@ minio_data/
 
 # Claude Code
 .claude/
+
+CLAUDE.md
