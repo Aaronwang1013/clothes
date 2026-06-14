@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { signOut } from "next-auth/react";
 import { getStoredUser, StoredUser } from "@/lib/auth";
 import { logoutUser } from "@/lib/api";
 
@@ -28,7 +29,8 @@ export default function Navbar({ variant = "site" }: NavbarProps) {
   async function handleLogout() {
     await logoutUser();
     setUser(null);
-    router.push("/login");
+    await signOut({ redirect: false });
+    router.push("/");
   }
 
   const logo = (
