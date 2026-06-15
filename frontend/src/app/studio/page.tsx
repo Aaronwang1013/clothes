@@ -49,6 +49,7 @@ export default function StudioPage() {
   const [selectedGarmentId, setSelectedGarmentId] = useState<string | null>(null);
   const [showTryonModal, setShowTryonModal] = useState(false);
   const [activeTab, setActiveTab] = useState<MobileTab>("tryon");
+  const [isPanelOpen, setIsPanelOpen] = useState(true);
 
   function handleTryonComplete(result: TryonResult) {
     console.log("Tryon complete:", result.task_id);
@@ -58,12 +59,17 @@ export default function StudioPage() {
     setSelectedGarmentId(null);
   }
 
+  function handleTabChange(tab: MobileTab) {
+    if (tab === "tryon") setIsPanelOpen(true);
+    setActiveTab(tab);
+  }
+
   return (
     <>
       <Navbar variant="app" />
 
-      {/* ── Desktop: 3-column grid ─────────────────────────── */}
-      <main className="hidden lg:grid lg:grid-cols-[260px_1fr_280px] flex-1 overflow-hidden min-h-0">
+      {/* ── Desktop: flex row ─────────────────────────────── */}
+      <main className="hidden lg:flex lg:flex-row flex-1 overflow-hidden min-h-0">
         <BrandsSidebar />
         <TryonCenter
           personImage={personImage}
@@ -72,16 +78,41 @@ export default function StudioPage() {
           onSelectGarment={setSelectedGarmentId}
           onTryOn={() => setShowTryonModal(true)}
           onReset={handleReset}
+          isPanelOpen={isPanelOpen}
+          onClosePanel={() => setIsPanelOpen(false)}
         />
+        {/* Strip sits between TryonCenter and OutfitRecords so OutfitRecords always hugs the right edge */}
+        {!isPanelOpen && (
+          <div className="w-10 shrink-0 border-l border-[var(--forma-border)] bg-white flex flex-col">
+            <button
+              onClick={() => setIsPanelOpen(true)}
+              className="flex-1 flex flex-col items-center justify-center gap-3 hover:bg-[#F5F5F7] transition-colors cursor-pointer min-h-0"
+              aria-label="展開上衣推薦"
+            >
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-3.5 h-3.5 text-[rgba(0,0,0,0.4)] shrink-0">
+                <path d="M9 2l-6 6 6 6" />
+              </svg>
+              <span
+                className="text-[0.6rem] tracking-[0.12em] text-[rgba(0,0,0,0.4)] select-none"
+                style={{ writingMode: "vertical-rl" }}
+              >
+                上衣推薦
+              </span>
+            </button>
+          </div>
+        )}
         <OutfitRecords />
       </main>
 
       {/* ── Mobile: Tab layout ─────────────────────────────── */}
       <div className="lg:hidden flex flex-col flex-1 overflow-hidden min-h-0">
-        {/* Content area */}
-        <div className="flex-1 overflow-y-auto">
-          {activeTab === "brands" && <BrandsSidebar />}
-          {activeTab === "tryon" && (
+        {activeTab === "brands" && (
+          <div className="flex-1 overflow-y-auto">
+            <BrandsSidebar />
+          </div>
+        )}
+        {activeTab === "tryon" && (
+          <div className="flex-1 overflow-hidden relative">
             <TryonCenter
               personImage={personImage}
               onImageChange={setPersonImage}
@@ -89,10 +120,35 @@ export default function StudioPage() {
               onSelectGarment={setSelectedGarmentId}
               onTryOn={() => setShowTryonModal(true)}
               onReset={handleReset}
+              isPanelOpen={isPanelOpen}
+              onClosePanel={() => setIsPanelOpen(false)}
             />
-          )}
-          {activeTab === "records" && <OutfitRecords />}
-        </div>
+            {!isPanelOpen && (
+              <div className="absolute right-0 top-0 bottom-0 w-10 z-20 flex flex-col border-l border-[var(--forma-border)] bg-white">
+                <button
+                  onClick={() => setIsPanelOpen(true)}
+                  className="flex-1 flex flex-col items-center justify-center gap-3 hover:bg-[#F5F5F7] transition-colors cursor-pointer min-h-0"
+                  aria-label="展開上衣推薦"
+                >
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-3.5 h-3.5 text-[rgba(0,0,0,0.4)] shrink-0">
+                    <path d="M9 2l-6 6 6 6" />
+                  </svg>
+                  <span
+                    className="text-[0.6rem] tracking-[0.12em] text-[rgba(0,0,0,0.4)] select-none"
+                    style={{ writingMode: "vertical-rl" }}
+                  >
+                    上衣推薦
+                  </span>
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+        {activeTab === "records" && (
+          <div className="flex-1 overflow-hidden flex flex-col">
+            <OutfitRecords />
+          </div>
+        )}
 
         {/* Bottom Tab Bar */}
         <nav
@@ -105,7 +161,7 @@ export default function StudioPage() {
             return (
               <button
                 key={id}
-                onClick={() => setActiveTab(id)}
+                onClick={() => handleTabChange(id)}
                 className={`flex flex-col items-center justify-center gap-1 py-3 min-h-[56px] transition-colors duration-150 cursor-pointer ${
                   isActive
                     ? "text-[#1D1D1F]"

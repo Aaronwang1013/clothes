@@ -55,6 +55,8 @@ interface TryonCenterProps {
   onSelectGarment: (id: string) => void;
   onTryOn: () => void;
   onReset: () => void;
+  isPanelOpen: boolean;
+  onClosePanel: () => void;
 }
 
 export default function TryonCenter({
@@ -64,6 +66,8 @@ export default function TryonCenter({
   onSelectGarment,
   onTryOn,
   onReset,
+  isPanelOpen,
+  onClosePanel,
 }: TryonCenterProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -233,74 +237,96 @@ export default function TryonCenter({
         </div>
 
         {/* Product panel */}
-        <div className="w-[220px] border-l border-[var(--forma-border)] bg-white flex flex-col overflow-hidden">
-          <div className="px-4 py-3 border-b border-[var(--forma-border)] shrink-0">
-            <div className="text-[0.78rem] font-medium text-[#1D1D1F] mb-2">上衣推薦</div>
-            <div className="flex border border-[var(--forma-border)] rounded-lg overflow-hidden">
-              {TABS.map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`flex-1 py-1.5 text-[0.62rem] tracking-[0.03em] transition-colors ${
-                    activeTab === tab
-                      ? "bg-[#1D1D1F] text-white"
-                      : "text-[#6E6E73] hover:bg-[#F5F5F7]"
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
+        {isPanelOpen && (
+          <div className="w-[220px] border-l border-[var(--forma-border)] bg-white flex flex-col overflow-hidden shrink-0">
+            {/* Header */}
+            <div className="px-4 py-3 border-b border-[var(--forma-border)] shrink-0 flex items-center justify-between">
+              <span className="text-[0.78rem] font-medium text-[#1D1D1F]">上衣推薦</span>
+              <button
+                onClick={onClosePanel}
+                className="w-6 h-6 flex items-center justify-center text-[rgba(0,0,0,0.35)] hover:text-[#1D1D1F] transition-colors cursor-pointer"
+                aria-label="收合面板"
+              >
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-3.5 h-3.5">
+                  <path d="M10 3l5 5-5 5M1 8h14" />
+                </svg>
+              </button>
             </div>
-          </div>
 
-          <div className="flex-1 overflow-y-auto">
-            {loadingGarments ? (
-              <div className="flex items-center justify-center h-20 text-[0.72rem] text-[rgba(0,0,0,0.35)]">
-                載入中...
-              </div>
-            ) : garments.length === 0 ? (
-              <div className="flex items-center justify-center h-20 text-[0.72rem] text-[rgba(0,0,0,0.35)]">
-                暫無商品
-              </div>
-            ) : (
-              <div className="p-2 flex flex-col gap-2">
-                {garments.map((g) => (
+            {/* Tabs */}
+            <div className="px-4 pt-3 pb-2 border-b border-[var(--forma-border)] shrink-0">
+              <div className="flex border border-[var(--forma-border)] rounded-lg overflow-hidden">
+                {TABS.map((tab) => (
                   <button
-                    key={g.id}
-                    onClick={() => onSelectGarment(g.id)}
-                    className={`w-full text-left border rounded-xl overflow-hidden transition-all hover:border-[rgba(0,0,0,0.2)] ${
-                      selectedGarmentId === g.id
-                        ? "border-[#1D1D1F] ring-1 ring-[#1D1D1F]"
-                        : "border-[var(--forma-border)]"
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`flex-1 py-1.5 text-[0.62rem] tracking-[0.03em] transition-colors ${
+                      activeTab === tab
+                        ? "bg-[#1D1D1F] text-white"
+                        : "text-[#6E6E73] hover:bg-[#F5F5F7]"
                     }`}
                   >
-                    <div className="aspect-[4/3] bg-[#F5F5F7] overflow-hidden">
-                      {g.image_url ? (
-                        <img src={g.image_url} alt={g.name} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-2xl opacity-30">👕</div>
-                      )}
-                    </div>
-                    <div className="p-2">
-                      <div className="text-[0.68rem] font-medium text-[#1D1D1F] truncate">{g.name}</div>
-                      <div className="text-[0.58rem] text-[rgba(0,0,0,0.4)] mt-0.5">{g.category}</div>
-                    </div>
+                    {tab}
                   </button>
                 ))}
               </div>
-            )}
-          </div>
+            </div>
 
-          <div className="p-3 border-t border-[var(--forma-border)] shrink-0">
-            <button
-              onClick={onTryOn}
-              disabled={!canTryOn}
-              className="w-full bg-[#1D1D1F] text-white py-2.5 text-[0.72rem] tracking-[0.08em] uppercase rounded-lg hover:bg-[#6E6E73] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-            >
-              {!personImage ? "請先上傳照片" : !selectedGarmentId ? "請選擇服裝" : "✦ 立即試穿"}
-            </button>
+            {/* Garment list */}
+            <div className="flex-1 overflow-y-auto">
+              {loadingGarments ? (
+                <div className="flex items-center justify-center h-20 text-[0.72rem] text-[rgba(0,0,0,0.35)]">
+                  載入中...
+                </div>
+              ) : garments.length === 0 ? (
+                <div className="flex items-center justify-center h-20 text-[0.72rem] text-[rgba(0,0,0,0.35)]">
+                  暫無商品
+                </div>
+              ) : (
+                <div className="p-2 flex flex-col gap-2">
+                  {garments.map((g) => (
+                    <button
+                      key={g.id}
+                      onClick={() => onSelectGarment(g.id)}
+                      className={`w-full text-left border rounded-xl overflow-hidden transition-all hover:border-[rgba(0,0,0,0.2)] ${
+                        selectedGarmentId === g.id
+                          ? "border-[#1D1D1F] ring-1 ring-[#1D1D1F]"
+                          : "border-[var(--forma-border)]"
+                      }`}
+                    >
+                      <div className="aspect-[4/3] bg-[#F5F5F7] overflow-hidden">
+                        {g.image_url ? (
+                          <img src={g.image_url} alt={g.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center opacity-20">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" className="w-8 h-8">
+                              <path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z" />
+                            </svg>
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-2">
+                        <div className="text-[0.68rem] font-medium text-[#1D1D1F] truncate">{g.name}</div>
+                        <div className="text-[0.58rem] text-[rgba(0,0,0,0.4)] mt-0.5">{g.category}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Try-on button */}
+            <div className="p-3 border-t border-[var(--forma-border)] shrink-0">
+              <button
+                onClick={onTryOn}
+                disabled={!canTryOn}
+                className="w-full bg-[#1D1D1F] text-white py-2.5 text-[0.72rem] tracking-[0.08em] uppercase rounded-lg hover:bg-[#6E6E73] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                {!personImage ? "請先上傳照片" : !selectedGarmentId ? "請選擇服裝" : "✦ 立即試穿"}
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Step guide */}

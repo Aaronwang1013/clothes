@@ -36,7 +36,7 @@ export default function BrandsSidebar({ onSelectCategory }: BrandsSidebarProps) 
   }
 
   return (
-    <aside className="bg-white border-r border-[var(--forma-border)] overflow-y-auto flex flex-col">
+    <aside className="w-[260px] shrink-0 bg-white border-r border-[var(--forma-border)] overflow-y-auto flex flex-col">
       {/* Brands */}
       <div className="p-4">
         <div className="flex items-center justify-between mb-3">

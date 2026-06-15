@@ -42,11 +42,11 @@ export default function OutfitRecords() {
   }
 
   return (
-    <aside className="bg-white border-l border-[var(--forma-border)] flex flex-col overflow-hidden">
+    <aside className="w-full lg:w-[280px] bg-white border-l border-[var(--forma-border)] flex flex-col overflow-hidden shrink-0">
       {/* Header */}
       <div className="px-4 py-3.5 border-b border-[var(--forma-border)] flex items-center justify-between shrink-0">
         <span className="text-[0.78rem] font-medium text-[#1D1D1F]">我的穿搭紀錄</span>
-        <button className="text-[0.62rem] text-[#6E6E73] hover:text-[#1D1D1F] transition-colors">
+        <button className="text-[0.62rem] text-[#6E6E73] hover:text-[#1D1D1F] transition-colors cursor-pointer">
           查看全部 ›
         </button>
       </div>
@@ -114,7 +114,7 @@ export default function OutfitRecords() {
 
       {/* Add button */}
       <div className="p-3 border-t border-[var(--forma-border)] shrink-0">
-        <button className="w-full border border-dashed border-[rgba(0,0,0,0.18)] rounded-xl py-3 text-[0.72rem] text-[#6E6E73] hover:border-[#1D1D1F] hover:text-[#1D1D1F] transition-colors flex items-center justify-center gap-2">
+        <button className="w-full border border-dashed border-[rgba(0,0,0,0.18)] rounded-xl py-3 text-[0.72rem] text-[#6E6E73] hover:border-[#1D1D1F] hover:text-[#1D1D1F] transition-colors flex items-center justify-center gap-2 cursor-pointer">
           <span className="text-base leading-none">+</span>
           新增穿搭紀錄
         </button>
