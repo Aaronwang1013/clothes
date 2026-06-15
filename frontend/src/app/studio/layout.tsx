@@ -4,7 +4,7 @@ export default function StudioLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-dvh flex flex-col overflow-hidden">
       {children}
     </div>
   );

@@ -72,11 +72,11 @@ export default function TryonModal({ personImage, garmentId, onClose, onComplete
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-warm-white w-[90vw] max-w-[720px] max-h-[85vh] overflow-y-auto relative p-8 shadow-xl">
+      <div className="bg-warm-white w-[92vw] max-w-[720px] max-h-[85dvh] overflow-y-auto relative p-5 md:p-8 shadow-xl">
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-taupe hover:text-charcoal transition-colors text-xl cursor-pointer bg-transparent border-none"
+          className="absolute top-3 right-3 w-11 h-11 flex items-center justify-center text-taupe hover:text-charcoal transition-colors text-xl cursor-pointer bg-transparent border-none"
         >
           ✕
         </button>
@@ -126,7 +126,7 @@ export default function TryonModal({ personImage, garmentId, onClose, onComplete
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                   <div className="flex flex-col items-center gap-2">
                     <span className="text-[0.7rem] tracking-[0.1em] uppercase text-taupe">
                       原始照片

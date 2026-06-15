@@ -24,7 +24,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F5F5F7] px-4">
+    <div className="min-h-dvh flex items-center justify-center bg-[#F5F5F7] px-4 py-8">
       <div className="w-full max-w-[400px]">
         <div className="text-center mb-10">
           <div className="font-serif text-[2rem] font-light tracking-[0.15em] text-cream">
@@ -33,7 +33,7 @@ export default function ForgotPasswordPage() {
           <p className="text-[0.78rem] text-taupe mt-1 tracking-[0.06em]">重設密碼</p>
         </div>
 
-        <div className="bg-white border border-[var(--forma-border)] p-8 shadow-sm">
+        <div className="bg-white border border-[var(--forma-border)] p-6 md:p-8 shadow-sm">
           {sent ? (
             <div className="text-center">
               <p className="text-cream text-[0.88rem] mb-2">重設連結已寄出</p>
@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     placeholder="your@email.com"
-                    className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+                    className="border border-[var(--forma-border)] px-3 py-3 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
                   />
                 </div>
 

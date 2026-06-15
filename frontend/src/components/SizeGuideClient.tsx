@@ -294,11 +294,11 @@ export default function SizeGuideClient() {
   const analysis: BodyAnalysis | null = hasBody ? analyze(h, w) : null;
 
   return (
-    <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F]">
+    <div className="min-h-dvh bg-[#F5F5F7] text-[#1D1D1F]">
       <Navbar />
 
       {/* ── Page header ──────────────────────────────────────── */}
-      <div className="pt-28 pb-10 px-8 max-w-5xl mx-auto">
+      <div className="pt-24 md:pt-28 pb-6 md:pb-10 px-4 md:px-8 max-w-5xl mx-auto">
         <p className="text-[0.62rem] tracking-[0.22em] uppercase text-[rgba(0,0,0,0.32)] mb-3">
           智慧尺寸指南
         </p>
@@ -311,11 +311,11 @@ export default function SizeGuideClient() {
       </div>
 
       {/* ── Main content ─────────────────────────────────────── */}
-      <div className="px-8 pb-20 max-w-5xl mx-auto">
+      <div className="px-4 md:px-8 pb-16 md:pb-20 max-w-5xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-px bg-[rgba(0,0,0,0.06)]">
 
           {/* ── Left: Form ─────────────────────────────────── */}
-          <div className="bg-white px-8 py-10 flex flex-col gap-8">
+          <div className="bg-white px-4 md:px-8 py-8 md:py-10 flex flex-col gap-8">
 
             {/* Step 1 – body data */}
             <section aria-labelledby="body-data-heading">
@@ -325,7 +325,7 @@ export default function SizeGuideClient() {
                 身體數據
               </h2>
 
-              <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 {[
                   { id: "sg-height", label: "身高 (cm)", ph: "165", val: height, set: setHeight, required: true },
                   { id: "sg-weight", label: "體重 (kg)", ph: "55",  val: weight, set: setWeight, required: true },
@@ -362,7 +362,7 @@ export default function SizeGuideClient() {
               </button>
 
               {showOptional && (
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {[
                     { id: "sg-chest", label: "胸圍", ph: "86", val: chest, set: setChest },
                     { id: "sg-waist", label: "腰圍", ph: "70", val: waist, set: setWaist },
@@ -477,7 +477,7 @@ export default function SizeGuideClient() {
           </div>
 
           {/* ── Right: Result panel ─────────────────────────── */}
-          <div className="bg-[#F5F5F7] px-8 py-10">
+          <div className="bg-[#F5F5F7] px-4 md:px-8 py-8 md:py-10">
 
             {/* Empty state — no body data */}
             {!analysis && (

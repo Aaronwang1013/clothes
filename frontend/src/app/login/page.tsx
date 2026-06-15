@@ -67,7 +67,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F5F5F7] px-4">
+    <div className="min-h-dvh flex items-center justify-center bg-[#F5F5F7] px-4 py-8">
       <div className="w-full max-w-[400px]">
         {/* Logo */}
         <div className="text-center mb-10">
@@ -78,7 +78,7 @@ export default function LoginPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-white border border-[var(--forma-border)] p-8 shadow-sm">
+        <div className="bg-white border border-[var(--forma-border)] p-6 md:p-8 shadow-sm">
           {/* Tabs */}
           <div className="flex border-b border-[var(--forma-border)] mb-6">
             {(["login", "register"] as Tab[]).map((t) => (
@@ -106,7 +106,7 @@ export default function LoginPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="選填"
-                  className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+                  className="border border-[var(--forma-border)] px-3 py-3 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
                 />
               </div>
             )}
@@ -119,7 +119,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="your@email.com"
-                className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+                className="border border-[var(--forma-border)] px-3 py-3 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
               />
             </div>
 
@@ -138,7 +138,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="••••••••"
-                className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+                className="border border-[var(--forma-border)] px-3 py-3 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
               />
             </div>
 
@@ -173,7 +173,7 @@ export default function LoginPage() {
               <button
                 key={provider}
                 onClick={() => signIn(provider)}
-                className="w-full flex items-center gap-3 border border-[var(--forma-border)] px-4 py-2.5 text-[0.78rem] tracking-[0.04em] text-cream cursor-pointer transition-colors hover:bg-black/[0.04] bg-white"
+                className="w-full flex items-center gap-3 border border-[var(--forma-border)] px-4 py-3 text-[0.78rem] tracking-[0.04em] text-cream cursor-pointer transition-colors hover:bg-black/[0.04] bg-white min-h-[44px]"
               >
                 <span className="w-5 text-center font-medium text-[0.85rem]">{icon}</span>
                 {label}

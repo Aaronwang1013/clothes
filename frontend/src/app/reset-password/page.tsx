@@ -54,7 +54,7 @@ function ResetPasswordForm() {
           onChange={(e) => setNewPassword(e.target.value)}
           required
           placeholder="至少 8 個字元"
-          className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+          className="border border-[var(--forma-border)] px-3 py-3 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
         />
       </div>
 
@@ -66,7 +66,7 @@ function ResetPasswordForm() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
           placeholder="再次輸入密碼"
-          className="border border-[var(--forma-border)] px-3 py-2.5 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
+          className="border border-[var(--forma-border)] px-3 py-3 text-[0.88rem] text-cream bg-white outline-none focus:border-cream transition-colors"
         />
       </div>
 
@@ -85,7 +85,7 @@ function ResetPasswordForm() {
 
 export default function ResetPasswordPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F5F5F7] px-4">
+    <div className="min-h-dvh flex items-center justify-center bg-[#F5F5F7] px-4 py-8">
       <div className="w-full max-w-[400px]">
         <div className="text-center mb-10">
           <div className="font-serif text-[2rem] font-light tracking-[0.15em] text-cream">
@@ -94,7 +94,7 @@ export default function ResetPasswordPage() {
           <p className="text-[0.78rem] text-taupe mt-1 tracking-[0.06em]">設定新密碼</p>
         </div>
 
-        <div className="bg-white border border-[var(--forma-border)] p-8 shadow-sm">
+        <div className="bg-white border border-[var(--forma-border)] p-6 md:p-8 shadow-sm">
           <Suspense fallback={<p className="text-taupe text-[0.82rem]">載入中...</p>}>
             <ResetPasswordForm />
           </Suspense>

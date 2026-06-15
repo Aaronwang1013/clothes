@@ -186,7 +186,7 @@ export default function LandingPage() {
 
       {/* ── Hero ───────────────────────────────────────────── */}
       <section
-        className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-20"
+        className="min-h-dvh flex flex-col items-center justify-center relative overflow-hidden pt-20"
         style={{ backgroundImage: GRID_BG }}
         aria-label="主視覺"
       >
@@ -208,10 +208,10 @@ export default function LandingPage() {
           </p>
 
           {/* CTA group */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
+          <div className="flex flex-col sm:flex-row items-center gap-4 mt-2 w-full sm:w-auto">
             <Link
               href="/studio"
-              className="bg-[#1D1D1F] text-white px-14 py-4 text-[0.8rem] tracking-[0.16em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c]"
+              className="w-full sm:w-auto text-center bg-[#1D1D1F] text-white px-14 py-4 text-[0.8rem] tracking-[0.16em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c]"
             >
               免費立即試穿
             </Link>
@@ -398,12 +398,12 @@ export default function LandingPage() {
       {/* ── How It Works ───────────────────────────────────── */}
       <section
         id="how-it-works"
-        className="py-32 px-6 bg-[#F5F5F7]"
+        className="py-16 md:py-32 px-4 md:px-6 bg-[#F5F5F7]"
         style={{ backgroundImage: GRID_BG }}
         aria-labelledby="how-heading"
       >
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-20">
+          <div className="text-center mb-12 md:mb-20">
             <p className="text-[0.65rem] tracking-[0.22em] uppercase text-[rgba(0,0,0,0.32)] mb-3">
               使用方式
             </p>
@@ -462,8 +462,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats ──────────────────────────────────────────── */}
-      <section className="bg-[#1D1D1F] py-20 px-6" aria-label="平台數據">
-        <div className="max-w-3xl mx-auto grid grid-cols-3 gap-8 text-center">
+      <section className="bg-[#1D1D1F] py-12 md:py-20 px-4 md:px-6" aria-label="平台數據">
+        <div className="max-w-3xl mx-auto grid grid-cols-3 gap-4 md:gap-8 text-center">
           {STATS.map((s) => (
             <div key={s.label} className="flex flex-col gap-2">
               <span className="font-serif text-[clamp(2rem,5vw,3rem)] font-light tracking-[0.08em] text-white">
@@ -480,11 +480,11 @@ export default function LandingPage() {
       {/* ── Features ───────────────────────────────────────── */}
       <section
         id="features"
-        className="bg-white py-32 px-6"
+        className="bg-white py-16 md:py-32 px-4 md:px-6"
         aria-labelledby="features-heading"
       >
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-20">
+          <div className="text-center mb-12 md:mb-20">
             <p className="text-[0.65rem] tracking-[0.22em] uppercase text-[rgba(0,0,0,0.32)] mb-3">
               功能特色
             </p>
@@ -524,7 +524,7 @@ export default function LandingPage() {
 
       {/* ── Final CTA ──────────────────────────────────────── */}
       <section
-        className="py-36 px-6 bg-[#F5F5F7] text-center relative overflow-hidden"
+        className="py-20 md:py-36 px-4 md:px-6 bg-[#F5F5F7] text-center relative overflow-hidden"
         style={{ backgroundImage: GRID_BG }}
         aria-label="行動呼籲"
       >
@@ -546,7 +546,7 @@ export default function LandingPage() {
 
           <Link
             href="/studio"
-            className="mt-2 bg-[#1D1D1F] text-white px-16 py-5 text-[0.82rem] tracking-[0.18em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c]"
+            className="mt-2 w-full sm:w-auto text-center bg-[#1D1D1F] text-white px-12 md:px-16 py-4 md:py-5 text-[0.82rem] tracking-[0.18em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c]"
           >
             立即免費試穿
           </Link>
@@ -558,7 +558,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ─────────────────────────────────────────── */}
-      <footer className="bg-[#1D1D1F] py-10 px-8">
+      <footer className="bg-[#1D1D1F] py-10 px-4 md:px-8">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="font-serif text-[1.1rem] font-light tracking-[0.15em] text-white">
             ShapeOn<span className="text-[#6E6E73]">You</span>
