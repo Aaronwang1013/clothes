@@ -44,7 +44,7 @@ const STEPS = [
   {
     num: "03",
     title: "AI 生成結果",
-    desc: "IDM-VTON 在 30 秒內生成高真實感的試穿效果圖",
+    desc: "AI 在 30 秒內生成高真實感的試穿效果圖，看見衣服穿上身的樣子",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -62,8 +62,8 @@ const STEPS = [
 
 const FEATURES = [
   {
-    title: "IDM-VTON 技術核心",
-    desc: "業界領先的虛擬試衣模型，精準還原布料質感、皺褶與服裝輪廓",
+    title: "高精度試穿引擎",
+    desc: "精準還原布料垂墜、皺褶與身形輪廓，讓每張試穿圖都像真實拍攝",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -198,7 +198,7 @@ export default function LandingPage() {
 
           {/* Headline */}
           <h1 className="font-serif text-[clamp(3.5rem,10vw,6rem)] font-light tracking-[0.1em] text-[#1D1D1F] leading-[0.95]">
-            Shape<span className="text-[#6E6E73]">OnYou</span>
+            Shape<span className="italic text-[#6E6E73]">OnYou</span>
           </h1>
 
           <p className="text-[clamp(1rem,2.5vw,1.2rem)] font-light tracking-[0.03em] text-[rgba(0,0,0,0.5)] leading-relaxed max-w-md">
@@ -211,13 +211,13 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
             <Link
               href="/studio"
-              className="bg-[#1D1D1F] text-white px-14 py-4 text-[0.8rem] tracking-[0.16em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c]"
+              className="bg-[#1D1D1F] text-white px-14 py-4 text-[0.8rem] tracking-[0.16em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D1D1F]"
             >
               免費立即試穿
             </Link>
             <a
               href="#how-it-works"
-              className="text-[0.75rem] tracking-[0.1em] uppercase text-[rgba(0,0,0,0.4)] hover:text-[#1D1D1F] transition-colors duration-200 cursor-pointer flex items-center gap-2"
+              className="text-[0.75rem] tracking-[0.1em] uppercase text-[rgba(0,0,0,0.4)] hover:text-[#1D1D1F] transition-colors duration-200 cursor-pointer flex items-center gap-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D1D1F]"
             >
               了解如何使用
               <svg
@@ -424,9 +424,14 @@ export default function LandingPage() {
                 {/* Connector line (between cards) */}
                 {i < STEPS.length - 1 && (
                   <div
-                    className="hidden md:block absolute top-12 left-[calc(50%+3rem)] w-[calc(100%-6rem)] h-px bg-[rgba(0,0,0,0.08)]"
+                    className="hidden md:block absolute top-12 left-[calc(50%+3rem)] w-[calc(100%-6rem)]"
                     aria-hidden="true"
-                  />
+                  >
+                    {/* seam-guide connector: a nod to the pattern-cutting lines of garment-making */}
+                    <div className="w-full border-t border-dashed border-[rgba(0,0,0,0.18)]" />
+                    <div className="absolute -top-[5px] left-0 w-px h-[10px] bg-[rgba(0,0,0,0.25)]" />
+                    <div className="absolute -top-[5px] right-0 w-px h-[10px] bg-[rgba(0,0,0,0.25)]" />
+                  </div>
                 )}
 
                 {/* Card */}
@@ -453,7 +458,7 @@ export default function LandingPage() {
           <div className="text-center mt-14">
             <Link
               href="/studio"
-              className="inline-block bg-[#1D1D1F] text-white px-12 py-4 text-[0.78rem] tracking-[0.16em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c]"
+              className="inline-block bg-[#1D1D1F] text-white px-12 py-4 text-[0.78rem] tracking-[0.16em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D1D1F]"
             >
               開始試穿
             </Link>
@@ -536,7 +541,7 @@ export default function LandingPage() {
           <h2 className="font-serif text-[clamp(2.2rem,6vw,3.8rem)] font-light tracking-[0.08em] text-[#1D1D1F] leading-tight">
             試穿，比想像
             <br />
-            <span className="text-[#6E6E73]">更真實</span>
+            <span className="italic text-[#6E6E73]">更真實</span>
           </h2>
 
           <p className="text-[0.9rem] font-light tracking-[0.03em] text-[rgba(0,0,0,0.45)] leading-relaxed max-w-sm">
@@ -546,7 +551,7 @@ export default function LandingPage() {
 
           <Link
             href="/studio"
-            className="mt-2 bg-[#1D1D1F] text-white px-16 py-5 text-[0.82rem] tracking-[0.18em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c]"
+            className="mt-2 bg-[#1D1D1F] text-white px-16 py-5 text-[0.82rem] tracking-[0.18em] uppercase no-underline transition-colors duration-200 hover:bg-[#3a3a3c] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D1D1F]"
           >
             立即免費試穿
           </Link>
@@ -567,13 +572,13 @@ export default function LandingPage() {
           <nav className="flex items-center gap-6" aria-label="頁尾導覽">
             <Link
               href="/studio"
-              className="text-[0.68rem] tracking-[0.12em] uppercase text-[rgba(255,255,255,0.4)] hover:text-white transition-colors duration-200 no-underline"
+              className="text-[0.68rem] tracking-[0.12em] uppercase text-[rgba(255,255,255,0.4)] hover:text-white transition-colors duration-200 no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               試衣間
             </Link>
             <Link
               href="/login"
-              className="text-[0.68rem] tracking-[0.12em] uppercase text-[rgba(255,255,255,0.4)] hover:text-white transition-colors duration-200 no-underline"
+              className="text-[0.68rem] tracking-[0.12em] uppercase text-[rgba(255,255,255,0.4)] hover:text-white transition-colors duration-200 no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               登入
             </Link>
