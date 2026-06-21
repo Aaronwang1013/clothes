@@ -354,25 +354,7 @@ export default function LandingPage() {
 
       </section>
 
-      {/* ── Brands strip ───────────────────────────────────── */}
-      <section
-        className="bg-white border-y border-[rgba(0,0,0,0.06)] py-6 overflow-hidden"
-        aria-label="合作品牌"
-      >
-        <p className="text-center text-[0.62rem] tracking-[0.22em] uppercase text-[rgba(0,0,0,0.28)] mb-5">
-          收錄品牌
-        </p>
-        <div className="flex justify-center flex-wrap gap-x-12 gap-y-3 px-8 max-w-3xl mx-auto">
-          {BRANDS.map((b) => (
-            <span
-              key={b}
-              className="font-serif text-[0.95rem] tracking-[0.2em] uppercase text-[rgba(0,0,0,0.3)] font-light"
-            >
-              {b}
-            </span>
-          ))}
-        </div>
-      </section>
+      {/* ── Brands strip (hidden: personal use only) ──────── */}
 
       {/* ── How It Works ───────────────────────────────────── */}
       <section

@@ -87,10 +87,21 @@ export default function Navbar({ variant = "site" }: NavbarProps) {
         <div className="flex items-center gap-4 ml-auto">
           {user ? (
             <div className="flex items-center gap-2">
-              <Link href="/profile" className="no-underline">
-                <div className="w-7 h-7 rounded-full bg-[#1D1D1F] flex items-center justify-center text-white text-[0.6rem] font-medium hover:opacity-70 transition-opacity">
-                  {(user.name || user.email)[0].toUpperCase()}
-                </div>
+              <Link href="/profile" className="no-underline flex items-center gap-2 hover:opacity-70 transition-opacity">
+                {user.avatar_url ? (
+                  <img
+                    src={user.avatar_url}
+                    alt={user.name ?? ""}
+                    className="w-7 h-7 rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-[#1D1D1F] flex items-center justify-center text-white text-[0.6rem] font-medium">
+                    {(user.name || user.email)[0].toUpperCase()}
+                  </div>
+                )}
+                <span className="text-[0.72rem] text-[#1D1D1F] max-w-[70px] truncate">
+                  Hi, {user.name || user.email.split("@")[0]}
+                </span>
               </Link>
               <button
                 onClick={handleLogout}
@@ -102,7 +113,7 @@ export default function Navbar({ variant = "site" }: NavbarProps) {
           ) : (
             <Link
               href="/login"
-              className="text-[0.72rem] tracking-[0.1em] uppercase text-[rgba(0,0,0,0.45)] hover:text-[#1D1D1F] transition-colors duration-200 no-underline"
+              className="flex items-center px-4 py-2 bg-[#1D1D1F] text-white rounded-lg text-[0.7rem] tracking-[0.05em] no-underline hover:bg-[#6E6E73] transition-colors"
             >
               登入
             </Link>
