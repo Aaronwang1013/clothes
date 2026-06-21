@@ -10,7 +10,7 @@ import { logoutUser } from "@/lib/api";
 const NAV_LINKS: { label: string; href: string; disabled?: boolean }[] = [
   { label: "首頁", href: "/" },
   { label: "尺寸推薦", href: "/size-guide" },
-  { label: "AI穿搭推薦", href: "#", disabled: true },
+  { label: "穿搭推薦", href: "#", disabled: true },
 ];
 
 interface NavbarProps {

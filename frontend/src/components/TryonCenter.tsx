@@ -28,7 +28,7 @@ const STEPS = [
   },
   {
     num: 3,
-    label: "AI 試穿",
+    label: "生成試穿",
     icon: (
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-3.5 h-3.5">
         <circle cx="10" cy="10" r="7" />
@@ -128,7 +128,7 @@ export default function TryonCenter({
                 <circle cx="10" cy="10" r="8" />
                 <path d="M10 6v5l3 2" />
               </svg>
-              <span className="text-[0.78rem] font-medium text-[#1D1D1F]">AI 虛擬試穿</span>
+              <span className="text-[0.78rem] font-medium text-[#1D1D1F]">虛擬試穿</span>
             </div>
             <div className="flex gap-1.5">
               <button className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/70 transition-colors text-[rgba(0,0,0,0.4)] hover:text-[#1D1D1F]">
@@ -297,7 +297,7 @@ export default function TryonCenter({
               disabled={!canTryOn}
               className="w-full bg-[#1D1D1F] text-white py-2.5 text-[0.72rem] tracking-[0.08em] uppercase rounded-lg hover:bg-[#6E6E73] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              {!personImage ? "請先上傳照片" : !selectedGarmentId ? "請選擇服裝" : "✦ 立即試穿"}
+              {!personImage ? "請先上傳照片" : !selectedGarmentId ? "請選擇服裝" : "立即試穿"}
             </button>
           </div>
         </div>

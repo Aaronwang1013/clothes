@@ -43,8 +43,8 @@ const STEPS = [
   },
   {
     num: "03",
-    title: "AI 生成結果",
-    desc: "AI 在 30 秒內生成高真實感的試穿效果圖，看見衣服穿上身的樣子",
+    title: "即時試穿",
+    desc: "30 秒內生成高真實感的效果圖，看見衣服穿上身的樣子",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -54,7 +54,8 @@ const STEPS = [
         className="w-7 h-7"
         aria-hidden="true"
       >
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 8v4l3 2" />
       </svg>
     ),
   },
@@ -97,7 +98,7 @@ const FEATURES = [
   },
   {
     title: "尺寸智慧推薦",
-    desc: "輸入身高、體重、胸圍，AI 分析體型給出最合身的尺寸建議",
+    desc: "輸入身高、體重、胸圍，自動分析體型給出最合身的尺寸建議",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -170,12 +171,9 @@ const BRANDS = ["Uniqlo", "H&M", "Zara", "Mango", "COS", "& Other Stories"];
 const STATS = [
   { num: "30s", label: "平均生成時間" },
   { num: "500+", label: "服裝款式" },
-  { num: "99%", label: "用戶滿意度" },
+  { num: "6+", label: "合作品牌" },
 ];
 
-// ─── Grid background ──────────────────────────────────────────────────────────
-
-const GRID_BG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M40 0H0v40' fill='none' stroke='%23000' stroke-width='0.4' stroke-opacity='0.04'/%3E%3C/svg%3E")`;
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -187,13 +185,12 @@ export default function LandingPage() {
       {/* ── Hero ───────────────────────────────────────────── */}
       <section
         className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden pt-20"
-        style={{ backgroundImage: GRID_BG }}
         aria-label="主視覺"
       >
         <div className="flex flex-col items-center text-center gap-8 px-6 max-w-3xl">
           {/* Eyebrow */}
           <p className="text-[0.62rem] tracking-[0.22em] uppercase text-[rgba(0,0,0,0.32)]">
-            AI 虛擬試衣間
+            虛擬試衣間
           </p>
 
           {/* Headline */}
@@ -202,9 +199,9 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-[clamp(1rem,2.5vw,1.2rem)] font-light tracking-[0.03em] text-[rgba(0,0,0,0.5)] leading-relaxed max-w-md">
-            AI 虛擬試衣間，讓每一個購物決策都更自信。
-            <br />
             上傳照片，30 秒看見真實的自己。
+            <br />
+            每一個購物決策，從此更有把握。
           </p>
 
           {/* CTA group */}
@@ -344,7 +341,7 @@ export default function LandingPage() {
                 />
               </svg>
               <div className="absolute bottom-2 right-2 bg-[#1D1D1F] text-white text-[0.55rem] tracking-[0.1em] px-2 py-1 uppercase">
-                AI 生成
+                試穿效果
               </div>
             </div>
             <div className="px-3 py-2 border-t border-[rgba(0,0,0,0.1)]">
@@ -355,24 +352,6 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div
-          className="absolute bottom-10 flex flex-col items-center gap-2"
-          aria-hidden="true"
-        >
-          <span className="text-[0.58rem] tracking-[0.16em] uppercase text-[rgba(0,0,0,0.22)]">
-            scroll
-          </span>
-          <svg
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            className="w-4 h-4 text-[rgba(0,0,0,0.22)] animate-bounce"
-          >
-            <polyline points="2 5 8 11 14 5" />
-          </svg>
-        </div>
       </section>
 
       {/* ── Brands strip ───────────────────────────────────── */}
@@ -399,7 +378,6 @@ export default function LandingPage() {
       <section
         id="how-it-works"
         className="py-32 px-6 bg-[#F5F5F7]"
-        style={{ backgroundImage: GRID_BG }}
         aria-labelledby="how-heading"
       >
         <div className="max-w-5xl mx-auto">
@@ -530,7 +508,6 @@ export default function LandingPage() {
       {/* ── Final CTA ──────────────────────────────────────── */}
       <section
         className="py-36 px-6 bg-[#F5F5F7] text-center relative overflow-hidden"
-        style={{ backgroundImage: GRID_BG }}
         aria-label="行動呼籲"
       >
         <div className="max-w-2xl mx-auto flex flex-col items-center gap-8">
