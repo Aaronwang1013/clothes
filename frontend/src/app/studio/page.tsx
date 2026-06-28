@@ -1,24 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import BrandsSidebar from "@/components/BrandsSidebar";
 import TryonCenter from "@/components/TryonCenter";
 import OutfitRecords from "@/components/OutfitRecords";
 import TryonModal from "@/components/TryonModal";
-import { TryonResult } from "@/lib/api";
+import { getMe, TryonResult } from "@/lib/api";
 
 export default function StudioPage() {
   const [personImage, setPersonImage] = useState<File | null>(null);
-  const [selectedGarmentId, setSelectedGarmentId] = useState<string | null>(
-    null,
-  );
+  const [selectedGarmentId, setSelectedGarmentId] = useState<string | null>(null);
   const [showTryonModal, setShowTryonModal] = useState(false);
   const [outfitRefreshTrigger, setOutfitRefreshTrigger] = useState(0);
+  const [creditsRemaining, setCreditsRemaining] = useState<number | null>(null);
+
+  async function refreshCredits() {
+    try {
+      const user = await getMe();
+      setCreditsRemaining(user.credits_remaining);
+    } catch {
+      setCreditsRemaining(null);
+    }
+  }
+
+  useEffect(() => {
+    refreshCredits();
+  }, []);
 
   function handleTryonComplete(result: TryonResult) {
     console.log("Tryon complete:", result.task_id);
     setOutfitRefreshTrigger((n) => n + 1);
+  }
+
+  function handleModalClose() {
+    setShowTryonModal(false);
+    refreshCredits();
   }
 
   function handleReset() {
@@ -29,16 +46,6 @@ export default function StudioPage() {
     <>
       <Navbar variant="app" />
 
-      {/* ── Page title ─────────────────────────────────────── */}
-      {/* <div className="shrink-0 px-8 py-4 border-b border-[var(--forma-border)] bg-white">
-        <p className="text-[0.62rem] tracking-[0.22em] uppercase text-[rgba(0,0,0,0.32)] mb-1">
-          AI 虛擬試衣間
-        </p>
-        <h1 className="font-serif text-[1.2rem] font-light tracking-[0.08em] text-[#1D1D1F]">
-          試衣間
-        </h1>
-      </div> */}
-
       <main className="flex-1 grid grid-cols-[260px_1fr_280px] overflow-hidden min-h-0">
         <BrandsSidebar />
         <TryonCenter
@@ -48,6 +55,7 @@ export default function StudioPage() {
           onSelectGarment={setSelectedGarmentId}
           onTryOn={() => setShowTryonModal(true)}
           onReset={handleReset}
+          creditsRemaining={creditsRemaining}
         />
         <OutfitRecords refreshTrigger={outfitRefreshTrigger} />
       </main>
@@ -56,7 +64,7 @@ export default function StudioPage() {
         <TryonModal
           personImage={personImage}
           garmentId={selectedGarmentId}
-          onClose={() => setShowTryonModal(false)}
+          onClose={handleModalClose}
           onComplete={handleTryonComplete}
         />
       )}

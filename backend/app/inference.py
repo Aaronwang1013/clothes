@@ -42,13 +42,18 @@ def run_tryon(task_id: str, person_key: str, garment_key: str, category: str, ga
                 "inputs": {
                     "model_image": person_url,
                     "garment_image": garment_url,
-                    "category": category or "auto",
-                    "mode": "balanced",
+                    "category": {"upper_body": "tops", "lower_body": "bottoms", "full_body": "one-pieces"}.get(category, category) or "auto",
+                    "mode": "quality",
                 },
             }
 
+            print(f"FASHN person_url: {person_url}")
+            print(f"FASHN garment_url: {garment_url}")
+
             with httpx.Client(timeout=30) as client:
                 run_resp = client.post(FASHN_RUN_URL, json=payload, headers=headers)
+                if not run_resp.is_success:
+                    print(f"FASHN ERROR BODY: {run_resp.text}")
                 run_resp.raise_for_status()
                 prediction_id = run_resp.json()["id"]
 

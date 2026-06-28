@@ -29,8 +29,8 @@ async def upload_garment(
     session: Session = Depends(get_session),
 ):
     contents = await file.read()
-    key = upload_image(contents, content_type=file.content_type or "image/png")
-    garment = Garment(name=name, category="upper_body", image_url=key)
+    key = upload_image(contents, content_type=file.content_type or "image/png", prefix="garment-images")
+    garment = Garment(name=name, category="tops", image_url=key)
     session.add(garment)
     session.commit()
     session.refresh(garment)

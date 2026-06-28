@@ -46,6 +46,8 @@ const STEPS = [
   },
 ];
 
+const DAILY_CREDITS = 5;
+
 interface TryonCenterProps {
   personImage: File | null;
   onImageChange: (file: File | null) => void;
@@ -53,6 +55,7 @@ interface TryonCenterProps {
   onSelectGarment: (id: string) => void;
   onTryOn: () => void;
   onReset: () => void;
+  creditsRemaining: number | null;
 }
 
 export default function TryonCenter({
@@ -62,6 +65,7 @@ export default function TryonCenter({
   onSelectGarment,
   onTryOn,
   onReset,
+  creditsRemaining,
 }: TryonCenterProps) {
   const [preview, setPreview] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -105,7 +109,8 @@ export default function TryonCenter({
     }
   }
 
-  const canTryOn = !!personImage && !!selectedGarmentId;
+  const outOfCredits = creditsRemaining !== null && creditsRemaining === 0;
+  const canTryOn = !!personImage && !!selectedGarmentId && !outOfCredits;
   const currentStep = !personImage ? 1 : !selectedGarmentId ? 2 : 3;
 
   return (
@@ -282,13 +287,34 @@ export default function TryonCenter({
             )}
           </div>
 
-          <div className="p-3 border-t border-[var(--forma-border)] shrink-0">
+          <div className="p-3 border-t border-[var(--forma-border)] shrink-0 flex flex-col gap-2">
+            {/* Credits indicator */}
+            {creditsRemaining !== null && (
+              <div className="flex items-center justify-between px-1">
+                <span className="text-[0.6rem] text-[rgba(0,0,0,0.35)] tracking-[0.03em]">今日剩餘次數</span>
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: DAILY_CREDITS }).map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-2 h-2 rounded-full transition-colors ${
+                        i < creditsRemaining
+                          ? "bg-[#1D1D1F]"
+                          : "bg-[rgba(0,0,0,0.12)]"
+                      }`}
+                    />
+                  ))}
+                  <span className={`text-[0.6rem] ml-1 font-medium ${outOfCredits ? "text-red-500" : "text-[rgba(0,0,0,0.45)]"}`}>
+                    {creditsRemaining}/{DAILY_CREDITS}
+                  </span>
+                </div>
+              </div>
+            )}
             <button
               onClick={onTryOn}
               disabled={!canTryOn}
               className="w-full bg-[#1D1D1F] text-white py-2.5 text-[0.72rem] tracking-[0.08em] uppercase rounded-lg hover:bg-[#6E6E73] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
             >
-              {!personImage ? "請先上傳照片" : !selectedGarmentId ? "請上傳服裝" : "立即試穿"}
+              {outOfCredits ? "今日次數已達上限" : !personImage ? "請先上傳照片" : !selectedGarmentId ? "請上傳服裝" : "立即試穿"}
             </button>
           </div>
         </div>

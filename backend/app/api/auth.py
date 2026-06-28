@@ -1,5 +1,5 @@
 import hashlib
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 
 import resend
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -70,6 +70,9 @@ class ChangePasswordRequest(BaseModel):
     new_password: str
 
 
+DAILY_CREDITS = 5
+
+
 class UserResponse(BaseModel):
     id: str
     email: str
@@ -77,6 +80,7 @@ class UserResponse(BaseModel):
     avatar_url: str | None
     is_admin: bool
     oauth_provider: str | None
+    credits_remaining: int
 
 
 class AuthResponse(BaseModel):
@@ -86,6 +90,11 @@ class AuthResponse(BaseModel):
 
 
 def _user_response(user: User) -> UserResponse:
+    today = date.today()
+    if user.credits_reset_date != today:
+        credits_remaining = DAILY_CREDITS
+    else:
+        credits_remaining = max(0, DAILY_CREDITS - user.daily_credits_used)
     return UserResponse(
         id=user.id,
         email=user.email,
@@ -93,6 +102,7 @@ def _user_response(user: User) -> UserResponse:
         avatar_url=user.avatar_url,
         is_admin=user.is_admin,
         oauth_provider=user.oauth_provider,
+        credits_remaining=credits_remaining,
     )
 
 
