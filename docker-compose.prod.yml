@@ -21,6 +21,9 @@ services:
 
   frontend:
     restart: always
+    environment:
+      - NEXT_PUBLIC_API_URL=http://18.138.212.224
+      - NEXTAUTH_URL=http://18.138.212.224
 
   minio:
     image: alpine
