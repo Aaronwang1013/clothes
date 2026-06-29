@@ -42,6 +42,8 @@ def run_tryon(task_id: str, person_key: str, garment_key: str, category: str, ga
                 "inputs": {
                     "model_image": person_url,
                     "product_image": garment_url,
+                    "resolution": "2k",
+                    "generation_mode": "quality",
                 },
             }
 
