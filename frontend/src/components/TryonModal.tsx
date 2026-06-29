@@ -159,24 +159,31 @@ export default function TryonModal({ personImage, garmentId, onClose, onComplete
 
         {/* Footer */}
         {(isSuccess || isFailed) && (
-          <div className="px-7 py-5 border-t border-neutral-100 flex gap-3">
-            {isSuccess && result?.result_image_url && (
-              <a
-                href={result.result_image_url}
-                download="tryon-result.png"
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 text-center border border-neutral-200 text-neutral-600 hover:bg-neutral-50 py-3 rounded-xl text-[0.78rem] tracking-[0.06em] transition-colors"
-              >
-                下載圖片
-              </a>
+          <div className="px-7 py-5 border-t border-neutral-100 flex flex-col gap-3">
+            {isSuccess && (
+              <p className="text-[0.68rem] text-neutral-400 text-center">
+                試穿結果將於 <span className="text-neutral-600 font-medium">30 天</span>後自動刪除，請記得下載保存
+              </p>
             )}
-            <button
-              onClick={onClose}
-              className="flex-1 bg-neutral-900 text-white py-3 rounded-xl text-[0.78rem] tracking-[0.06em] hover:bg-neutral-700 transition-colors"
-            >
-              {isSuccess ? "繼續挑選" : "關閉"}
-            </button>
+            <div className="flex gap-3">
+              {isSuccess && result?.result_image_url && (
+                <a
+                  href={result.result_image_url}
+                  download="tryon-result.png"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex-1 text-center border border-neutral-200 text-neutral-600 hover:bg-neutral-50 py-3 rounded-xl text-[0.78rem] tracking-[0.06em] transition-colors"
+                >
+                  下載圖片
+                </a>
+              )}
+              <button
+                onClick={onClose}
+                className="flex-1 bg-neutral-900 text-white py-3 rounded-xl text-[0.78rem] tracking-[0.06em] hover:bg-neutral-700 transition-colors"
+              >
+                {isSuccess ? "繼續挑選" : "關閉"}
+              </button>
+            </div>
           </div>
         )}
       </div>

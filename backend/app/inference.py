@@ -84,7 +84,7 @@ def run_tryon(task_id: str, person_key: str, garment_key: str, category: str, ga
             # 下載結果圖並上傳到 S3/MinIO
             img_resp = httpx.get(result_url, timeout=60)
             img_resp.raise_for_status()
-            result_key = upload_image(img_resp.content, content_type="image/png")
+            result_key = upload_image(img_resp.content, content_type="image/png", prefix="result-images")
 
             task.result_image_url = result_key
             task.status = "completed"
