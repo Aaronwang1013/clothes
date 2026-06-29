@@ -21,8 +21,11 @@ services:
 
   frontend:
     restart: always
+    build:
+      context: ./frontend
+      args:
+        - NEXT_PUBLIC_API_URL=http://18.138.212.224
     environment:
-      - NEXT_PUBLIC_API_URL=http://18.138.212.224
       - NEXTAUTH_URL=http://18.138.212.224
 
   minio:
