@@ -216,7 +216,7 @@ def forgot_password(request: Request, body: ForgotPasswordRequest, session: Sess
             resend.api_key = settings.resend_api_key
             reset_url = f"{settings.frontend_url}/reset-password?token={raw}"
             resend.Emails.send({
-                "from": "noreply@yourdomain.com",
+                "from": "onboarding@resend.dev",
                 "to": user.email,
                 "subject": "重設您的密碼",
                 "html": f"""
