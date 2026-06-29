@@ -9,7 +9,8 @@ interface OutfitRecordsProps {
 }
 
 function timeAgo(dateStr: string): string {
-  const diff = Date.now() - new Date(dateStr).getTime();
+  const utcStr = dateStr.endsWith("Z") || dateStr.includes("+") ? dateStr : dateStr + "Z";
+  const diff = Date.now() - new Date(utcStr).getTime();
   const mins = Math.floor(diff / 60000);
   if (mins < 1) return "剛剛";
   if (mins < 60) return `${mins} 分鐘前`;
